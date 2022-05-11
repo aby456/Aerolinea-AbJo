@@ -1,2 +1,2 @@
 console.log('hola mundo')
-console.log('oedro pica piedra')
+console.log('pedro pica piedra')
