@@ -1,4 +1,5 @@
 package com.peluqueria.peluqueria.models;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,23 +13,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="TBL_CLIENTE")
+@Table(name="TBL_SERVICIO")
 @Getter
 @Setter
-
-public class Cliente {
+public class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    @Column(name = "NOMBRE")   
-    private String nombre;
-    @Column(name = "TELEFONO")
-    private String telefono;
-    @Column(name = "DIRECCION")   
-    private String direccion;
-    @Column(name = "EMAIL")   
-    private String email;
-    @Column(name = "PASSWORD")
-    private String password;
+    private long id;
+    @Column(name = "LINEA")
+    private String linea;
+    @Column(name = "NUMERO_ASIENTOS")
+    private int numero_asientos;
+    @Column(name = "COMPARTIMIENTOS")
+    private int compartimientos;
 
 }
