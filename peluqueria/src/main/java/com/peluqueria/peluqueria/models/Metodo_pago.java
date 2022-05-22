@@ -23,5 +23,7 @@ public class Metodo_pago {
     @Column(name = "METODO")
     private String metodo;
 
+    @OneToMany(mappedBy = "metodopago")
+    private List<Reservacion> reservacion;
 
 }

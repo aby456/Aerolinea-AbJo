@@ -6,7 +6,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -26,5 +29,12 @@ public class Servicio {
     private int numero_asientos;
     @Column(name = "COMPARTIMIENTOS")
     private int compartimientos;
+
+    @ManyToMany(mappedBy = "servicio")
+    private List<Reservacion> reservacion;
+
+    @ManyToOne
+    @JoinColumn(name="CATEGORIA_ID", nullable=false)
+    private Categoria categoria; 
 
 }

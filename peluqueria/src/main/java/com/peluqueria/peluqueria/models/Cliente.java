@@ -1,5 +1,7 @@
 package com.peluqueria.peluqueria.models;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,4 +33,6 @@ public class Cliente {
     @Column(name = "PASSWORD")
     private String password;
 
+    @OneToMany(mappedBy = "cliente")
+    private List<Reservacion> reservacion;
 }

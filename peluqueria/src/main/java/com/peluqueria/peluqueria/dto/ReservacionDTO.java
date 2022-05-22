@@ -1,4 +1,4 @@
-package com.peluqueria.peluqueria.daio;
+package com.peluqueria.peluqueria.dto;
 
 public class ReservacionDTO {
     private long id;

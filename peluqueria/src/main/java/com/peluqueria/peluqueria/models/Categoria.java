@@ -21,4 +21,8 @@ public class Categoria {
     private String estadoAsiento;
     @Column(name = "COMPARTIMIENTO") 
     private String compartimiento;
+
+    @OneToMany(mappedBy = "categoria")
+    private List<Servicio> servicio;
+
 }
