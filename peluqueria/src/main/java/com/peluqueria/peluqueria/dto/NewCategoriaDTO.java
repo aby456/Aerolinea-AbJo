@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class NewCategoriaDTO {
-    private Long id_asiento;
-    private String estado_asiento;
+    private String estado;
     private String compartimiento;
 }
