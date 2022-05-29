@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class ServicioDTO {
-    private long id;
+    private Long id;
     private String linea;
     private int numero_asientos;
     private int compartimientos;

@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class NewServicioDTO {
-    private long id;
     private String linea;
     private int numero_asientos;
     private int compartimientos;

@@ -22,7 +22,7 @@ import lombok.Setter;
 public class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
     @Column(name = "LINEA")
     private String linea;
     @Column(name = "NUMERO_ASIENTOS")

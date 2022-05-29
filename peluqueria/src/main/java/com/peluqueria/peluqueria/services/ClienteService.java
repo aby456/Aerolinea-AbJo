@@ -9,6 +9,6 @@ public interface ClienteService {
     public ClienteDTO create(NewClienteDTO clienteDTO);
     public ClienteDTO retrieve(Long id) throws Exception;
     public ClienteDTO update(ClienteDTO clienteDTO) throws Exception;
-    public ClienteDTO delete(Long id) throws Exception;
+    public void delete(Long id) throws Exception;
     public List<ClienteDTO> list();
 }
