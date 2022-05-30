@@ -16,9 +16,9 @@ import lombok.Setter;
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id_asiento;
-    @Column(name = "ESTADO_ASIENTO") 
-    private String estadoAsiento;
+    private Long id;
+    @Column(name = "ESTADO") 
+    private String estado;
     @Column(name = "COMPARTIMIENTO") 
     private String compartimiento;
 

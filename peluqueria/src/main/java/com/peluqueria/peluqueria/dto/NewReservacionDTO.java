@@ -1,4 +1,5 @@
 package com.peluqueria.peluqueria.dto;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -6,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ReservacionDTO {
+public class NewReservacionDTO {
     private long id;
     private String hora;
     private String lugar;
