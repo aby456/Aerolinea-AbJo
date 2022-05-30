@@ -9,7 +9,7 @@ public interface ReservacionService {
     
     public ReservacionDTO create(NewReservacionDTO reservacionDTO);
     public ReservacionDTO retrieve(Long id) throws Exception;
-    public ReservacionDTO update(ReservacionDTO reservacionDTO) throws Exception;
+    public ReservacionDTO update(ReservacionDTO reservacionDTO, Long id) throws Exception;
     public void delete(Long id) throws Exception;
     public List<ReservacionDTO> list();
 
