@@ -43,8 +43,9 @@ public class ReservacionServiceImpl implements ReservacionService {
 
     @Override
     @Transactional
-    public ReservacionDTO update(ReservacionDTO reservacionDTO) throws Exception {
+    public ReservacionDTO update(ReservacionDTO reservacionDTO , Long id) throws Exception {
         Reservacion reservacion = reservacionRepository.findById(reservacionDTO.getId()).orElseThrow(()-> new Exception("Categoria not found"));
+        reservacion.setId(id);
         reservacion = modelMapper.map(reservacionDTO, Reservacion.class);
         reservacionRepository.save(reservacion);
         return modelMapper.map(reservacion, ReservacionDTO.class);

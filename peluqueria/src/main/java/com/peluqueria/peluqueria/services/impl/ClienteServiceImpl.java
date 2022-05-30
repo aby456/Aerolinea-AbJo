@@ -41,8 +41,9 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public ClienteDTO update(ClienteDTO clienteDTO) throws Exception {
+    public ClienteDTO update(ClienteDTO clienteDTO, Long id) throws Exception {
         Cliente cliente = clienteRepository.findById(clienteDTO.getId()).orElseThrow(()-> new Exception("Categoria not found"));
+        cliente.setId(id);
         cliente = modelMapper.map(clienteDTO, Cliente.class);
         clienteRepository.save(cliente);
         return modelMapper.map(cliente, ClienteDTO.class);

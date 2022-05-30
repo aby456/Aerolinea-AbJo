@@ -43,8 +43,9 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     @Transactional
-    public CategoriaDTO update(CategoriaDTO categoriaDTO) throws Exception {
+    public CategoriaDTO update(CategoriaDTO categoriaDTO, Long id) throws Exception {
         Categoria categoria = categoriaRepository.findById(categoriaDTO.getId()).orElseThrow(()-> new Exception("Categoria not found"));
+        categoria.setId(id);
         categoria = modelMapper.map(categoriaDTO, Categoria.class);
         categoriaRepository.save(categoria);
         return modelMapper.map(categoria, CategoriaDTO.class);
