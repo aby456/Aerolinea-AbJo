@@ -1,37 +1,35 @@
 package com.peluqueria.peluqueria.controllers;
 
-
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
-import com.peluqueria.peluqueria.dto.CategoriaDTO;
-import com.peluqueria.peluqueria.dto.NewCategoriaDTO;
-import com.peluqueria.peluqueria.services.CategoriaService;
+import com.peluqueria.peluqueria.dto.Metodo_pagoDTO;
+import com.peluqueria.peluqueria.dto.NewMetodo_pagoDTO;
+import com.peluqueria.peluqueria.services.Metodo_pagoService;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/categoria")
-public class CategoriaController {
-    private final CategoriaService categ;
-    public CategoriaController(CategoriaService cat){
-        this.categ = cat;
+@RequestMapping("/metodo_pago")
+public class Metodo_pagoController {
+    
+    private final Metodo_pagoService metodo_pago;
+    public Metodo_pagoController(Metodo_pagoService mtp){
+        this.metodo_pago = mtp;
     }
 
     @PostMapping()
-    public ResponseEntity<?> create(@RequestBody NewCategoriaDTO categoriaDTO){
+    public ResponseEntity<?> create(@RequestBody NewMetodo_pagoDTO metodo_pagoDTO){
         try{
-            CategoriaDTO result = categ.create(categoriaDTO);
+            Metodo_pagoDTO result = metodo_pago.create(metodo_pagoDTO);
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
         }catch(Exception e){
 
@@ -43,7 +41,7 @@ public class CategoriaController {
     @GetMapping("/{id}")
     public ResponseEntity<?> retrieve(@PathVariable("id") Long id){
         try {
-            CategoriaDTO result = categ.retrieve(id);
+            Metodo_pagoDTO result = metodo_pago.retrieve(id);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
@@ -53,7 +51,7 @@ public class CategoriaController {
     @GetMapping()
     public ResponseEntity<?> list(){
         try {
-            List<CategoriaDTO> result = categ.list();
+            List<Metodo_pagoDTO> result = metodo_pago.list();
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
@@ -61,9 +59,9 @@ public class CategoriaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody CategoriaDTO categoriaDTO, @PathVariable("id") Long id){
+    public ResponseEntity<?> update(@RequestBody Metodo_pagoDTO metodo_pagoDTO, @PathVariable("id") Long id){
         try {
-            CategoriaDTO result = categ.update(categoriaDTO,id);
+            Metodo_pagoDTO result = metodo_pago.update(metodo_pagoDTO,id);
             return ResponseEntity.ok().body(result);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
@@ -73,16 +71,10 @@ public class CategoriaController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable("id") Long id){
         try {
-            categ.delete(id);
-            return ResponseEntity.ok().body("category Delete");
+            metodo_pago.delete(id);
+            return ResponseEntity.ok().body("metodo_pago Delete");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
         }
     }
-
-
-
-
-
-
 }
