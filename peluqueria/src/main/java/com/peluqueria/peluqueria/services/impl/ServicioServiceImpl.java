@@ -47,8 +47,9 @@ public class ServicioServiceImpl implements ServicioService {
 
     @Override
     @Transactional
-    public ServicioDTO update(ServicioDTO servicioDTO) throws Exception {
+    public ServicioDTO update(ServicioDTO servicioDTO , Long id) throws Exception {
         Servicio servicio = servicioRepository.findById(servicioDTO.getId()).orElseThrow(()-> new Exception("Categoria not found"));
+        servicio.setId(id);
         servicio = modelMapper.map(servicioDTO, Servicio.class);
         servicioRepository.save(servicio);
         return modelMapper.map(servicio, ServicioDTO.class);

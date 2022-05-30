@@ -43,8 +43,9 @@ public class Metodo_pagoServiceImpl implements Metodo_pagoService {
 
     @Override
     @Transactional
-    public Metodo_pagoDTO update(Metodo_pagoDTO metodo_pagoDTO) throws Exception {
+    public Metodo_pagoDTO update(Metodo_pagoDTO metodo_pagoDTO, Long id) throws Exception {
         Metodo_pago metodo_pago = metodo_pagoRepository.findById(metodo_pagoDTO.getId()).orElseThrow(()-> new Exception("Categoria not found"));
+        metodo_pago.setId(id);
         metodo_pago = modelMapper.map(metodo_pagoDTO, Metodo_pago.class);
         metodo_pagoRepository.save(metodo_pago);
         return modelMapper.map(metodo_pago, Metodo_pagoDTO.class);
