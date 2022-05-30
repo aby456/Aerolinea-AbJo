@@ -38,7 +38,7 @@ public class ServicioServiceImpl implements ServicioService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public ServicioDTO retrieve(Long id) throws Exception {
         Servicio servicio = servicioRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
         return modelMapper.map(servicio, ServicioDTO.class);
@@ -64,7 +64,7 @@ public class ServicioServiceImpl implements ServicioService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ServicioDTO> list() {
         List<Servicio> categorias = servicioRepository.findAll();
         return categorias.stream().map(servicio-> modelMapper.map(servicio, ServicioDTO.class)).collect(Collectors.toList());

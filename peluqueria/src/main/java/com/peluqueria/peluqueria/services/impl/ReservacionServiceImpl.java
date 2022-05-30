@@ -35,7 +35,7 @@ public class ReservacionServiceImpl implements ReservacionService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public ReservacionDTO retrieve(Long id) throws Exception {
         Reservacion reservacion = reservacionRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
         return modelMapper.map(reservacion, ReservacionDTO.class);
@@ -59,7 +59,7 @@ public class ReservacionServiceImpl implements ReservacionService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<ReservacionDTO> list() {
         List<Reservacion> reservacions = reservacionRepository.findAll();
         return reservacions.stream().map(reservacion-> modelMapper.map(reservacion, ReservacionDTO.class)).collect(Collectors.toList());

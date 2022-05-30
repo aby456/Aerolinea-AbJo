@@ -59,7 +59,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<CategoriaDTO> list() {
         List<Categoria> categorias = categoriaRepository.findAll();
         return categorias.stream().map(categoria-> modelMapper.map(categoria, CategoriaDTO.class)).collect(Collectors.toList());

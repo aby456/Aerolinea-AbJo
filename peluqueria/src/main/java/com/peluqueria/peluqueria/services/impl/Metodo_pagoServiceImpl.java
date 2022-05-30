@@ -35,7 +35,7 @@ public class Metodo_pagoServiceImpl implements Metodo_pagoService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public Metodo_pagoDTO retrieve(Long id) throws Exception {
         Metodo_pago metodo_pago = metodo_pagoRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
         return modelMapper.map(metodo_pago, Metodo_pagoDTO.class);
@@ -59,7 +59,7 @@ public class Metodo_pagoServiceImpl implements Metodo_pagoService {
     }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Metodo_pagoDTO> list() {
         List<Metodo_pago> metodo_pagos = metodo_pagoRepository.findAll();
         return metodo_pagos.stream().map(metodo_pago-> modelMapper.map(metodo_pago, Metodo_pagoDTO.class)).collect(Collectors.toList());

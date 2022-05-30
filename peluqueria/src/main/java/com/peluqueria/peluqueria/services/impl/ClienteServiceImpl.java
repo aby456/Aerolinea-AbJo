@@ -35,12 +35,14 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ClienteDTO retrieve(Long id) throws Exception {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
         return modelMapper.map(cliente, ClienteDTO.class);
     }
 
     @Override
+    @Transactional
     public ClienteDTO update(ClienteDTO clienteDTO, Long id) throws Exception {
         Cliente cliente = clienteRepository.findById(clienteDTO.getId()).orElseThrow(()-> new Exception("Categoria not found"));
         cliente.setId(id);
@@ -50,6 +52,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) throws Exception {
         Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
         clienteRepository.deleteById(cliente.getId());
@@ -57,6 +60,7 @@ public class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ClienteDTO> list() {
         List<Cliente> clientes = clienteRepository.findAll();
         return clientes.stream().map(cliente-> modelMapper.map(cliente, ClienteDTO.class)).collect(Collectors.toList());
