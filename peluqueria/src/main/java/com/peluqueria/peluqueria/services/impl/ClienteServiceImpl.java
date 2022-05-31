@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.peluqueria.peluqueria.dto.ClienteDTO;
 import com.peluqueria.peluqueria.dto.NewClienteDTO;
+import com.peluqueria.peluqueria.exception.ResourceNotFoundException;
 import com.peluqueria.peluqueria.models.Cliente;
 import com.peluqueria.peluqueria.repositories.ClienteRepository;
 import com.peluqueria.peluqueria.services.ClienteService;
@@ -36,15 +37,15 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional(readOnly = true)
-    public ClienteDTO retrieve(Long id) throws Exception {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
+    public ClienteDTO retrieve(Long id)  {
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         return modelMapper.map(cliente, ClienteDTO.class);
     }
 
     @Override
     @Transactional
-    public ClienteDTO update(ClienteDTO clienteDTO, Long id) throws Exception {
-        Cliente cliente = clienteRepository.findById(clienteDTO.getId()).orElseThrow(()-> new Exception("Categoria not found"));
+    public ClienteDTO update(ClienteDTO clienteDTO, Long id)  {
+        Cliente cliente = clienteRepository.findById(clienteDTO.getId()).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         cliente.setId(id);
         cliente = modelMapper.map(clienteDTO, Cliente.class);
         clienteRepository.save(cliente);
@@ -53,8 +54,8 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     @Transactional
-    public void delete(Long id) throws Exception {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
+    public void delete(Long id)  {
+        Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         clienteRepository.deleteById(cliente.getId());
         
     }

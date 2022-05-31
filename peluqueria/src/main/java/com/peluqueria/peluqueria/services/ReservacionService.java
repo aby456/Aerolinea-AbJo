@@ -8,9 +8,10 @@ import com.peluqueria.peluqueria.dto.ReservacionDTO;
 public interface ReservacionService {
     
     public ReservacionDTO create(NewReservacionDTO reservacionDTO);
-    public ReservacionDTO retrieve(Long id) throws Exception;
-    public ReservacionDTO update(ReservacionDTO reservacionDTO, Long id) throws Exception;
-    public void delete(Long id) throws Exception;
+    public ReservacionDTO retrieve(Long id) ;
+    public ReservacionDTO update(ReservacionDTO reservacionDTO, Long id) ;
+    public void delete(Long id) ;
+
     public List<ReservacionDTO> list();
 
 }

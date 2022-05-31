@@ -1,5 +1,7 @@
 package com.peluqueria.peluqueria.dto;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class NewServicioDTO {
+    @NotNull(message = "Linea width can't be null.")
     private String linea;
     private int numero_asientos;
     private int compartimientos;

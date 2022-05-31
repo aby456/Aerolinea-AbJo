@@ -1,4 +1,5 @@
 package com.peluqueria.peluqueria.dto;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -6,7 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Metodo_pagoDTO {
+@AllArgsConstructor
+public class Metodo_pagoDTO extends NewMetodo_pagoDTO {
     private Long id;
-    private String metodo;
+
 }

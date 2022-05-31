@@ -1,4 +1,5 @@
 package com.peluqueria.peluqueria.dto;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -6,8 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CategoriaDTO {
+@AllArgsConstructor
+public class CategoriaDTO extends NewCategoriaDTO {
     private Long id;
-    private String estado;
-    private String compartimiento;
 }

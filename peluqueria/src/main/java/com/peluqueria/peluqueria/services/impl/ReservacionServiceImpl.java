@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.peluqueria.peluqueria.dto.NewReservacionDTO;
 import com.peluqueria.peluqueria.dto.ReservacionDTO;
+import com.peluqueria.peluqueria.exception.ResourceNotFoundException;
 import com.peluqueria.peluqueria.models.Reservacion;
 import com.peluqueria.peluqueria.repositories.ReservacionRepository;
 import com.peluqueria.peluqueria.services.ReservacionService;
@@ -20,6 +21,7 @@ public class ReservacionServiceImpl implements ReservacionService {
     final ModelMapper modelMapper;
     final ReservacionRepository reservacionRepository;
 
+    @Autowired
     public ReservacionServiceImpl(@Autowired ReservacionRepository repository, ModelMapper mapper){
         this.reservacionRepository = repository;
         this.modelMapper = mapper;
@@ -36,15 +38,15 @@ public class ReservacionServiceImpl implements ReservacionService {
 
     @Override
     @Transactional(readOnly = true)
-    public ReservacionDTO retrieve(Long id) throws Exception {
-        Reservacion reservacion = reservacionRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
+    public ReservacionDTO retrieve(Long id)  {
+        Reservacion reservacion = reservacionRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         return modelMapper.map(reservacion, ReservacionDTO.class);
     }
 
     @Override
     @Transactional
-    public ReservacionDTO update(ReservacionDTO reservacionDTO , Long id) throws Exception {
-        Reservacion reservacion = reservacionRepository.findById(reservacionDTO.getId()).orElseThrow(()-> new Exception("Categoria not found"));
+    public ReservacionDTO update(ReservacionDTO reservacionDTO , Long id)  {
+        Reservacion reservacion = reservacionRepository.findById(reservacionDTO.getId()).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         reservacion.setId(id);
         reservacion = modelMapper.map(reservacionDTO, Reservacion.class);
         reservacionRepository.save(reservacion);
@@ -53,8 +55,8 @@ public class ReservacionServiceImpl implements ReservacionService {
 
     @Override
     @Transactional
-    public void delete(Long id) throws Exception {
-        Reservacion reservacion = reservacionRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
+    public void delete(Long id)  {
+        Reservacion reservacion = reservacionRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         reservacionRepository.deleteById(reservacion.getId());
     }
 

@@ -1,5 +1,7 @@
 package com.peluqueria.peluqueria.dto;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,9 +10,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class NewReservacionDTO {
-    private long id;
+    @NotNull(message = "Hora width can't be null.")
     private String hora;
+    @NotNull(message = "Lugar width can't be null.")
     private String lugar;
+    @NotNull(message = "Fecha width can't be null.")
     private String fecha;
     private Boolean disponibilidad;
     private double costo_pasaje;

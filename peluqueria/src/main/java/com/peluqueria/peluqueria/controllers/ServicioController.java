@@ -2,10 +2,13 @@ package com.peluqueria.peluqueria.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.peluqueria.peluqueria.dto.NewServicioDTO;
 import com.peluqueria.peluqueria.dto.ServicioDTO;
 import com.peluqueria.peluqueria.services.ServicioService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,59 +25,49 @@ import org.springframework.web.bind.annotation.RestController;
 public class ServicioController {
     
     private final ServicioService service;
+
+    @Autowired
     public ServicioController(ServicioService srv){
         this.service = srv;
     }
 
     @PostMapping()
-    public ResponseEntity<?> create(@RequestBody NewServicioDTO servicioDTO){
-        try{
-            ServicioDTO result = service.create(servicioDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(result);
-        }catch(Exception e){
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
-
-        }
+    public ResponseEntity<ServicioDTO> create(@Valid @RequestBody NewServicioDTO servicioDTO){
+        
+        ServicioDTO result = service.create(servicioDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> retrieve(@PathVariable("id") Long id){
-        try {
-            ServicioDTO result = service.retrieve(id);
-            return ResponseEntity.ok().body(result);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
-        }
+    public ResponseEntity<ServicioDTO> retrieve(@PathVariable("id") Long id){
+        
+        ServicioDTO result = service.retrieve(id);
+        return ResponseEntity.ok().body(result);
+        
     }
 
     @GetMapping()
-    public ResponseEntity<?> list(){
-        try {
-            List<ServicioDTO> result = service.list();
-            return ResponseEntity.ok().body(result);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
-        }
+    public ResponseEntity<List<ServicioDTO>> list(){
+        
+        List<ServicioDTO> result = service.list();
+        return ResponseEntity.ok().body(result);
+        
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody ServicioDTO servicioDTO, @PathVariable("id") Long id){
-        try {
-            ServicioDTO result = service.update(servicioDTO,id);
-            return ResponseEntity.ok().body(result);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
-        }
+    public ResponseEntity<ServicioDTO> update(@RequestBody ServicioDTO servicioDTO, @PathVariable("id") Long id){
+        
+        ServicioDTO result = service.update(servicioDTO,id);
+        return ResponseEntity.ok().body(result);
+        
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id){
-        try {
-            service.delete(id);
-            return ResponseEntity.ok().body("servicio Delete");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
-        }
+    public ResponseEntity<String> delete(@PathVariable("id") Long id){
+        
+        service.delete(id);
+        return ResponseEntity.ok().body("servicio Delete");
+        
     }
 }

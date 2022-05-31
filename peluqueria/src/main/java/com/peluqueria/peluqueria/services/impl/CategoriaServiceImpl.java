@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.peluqueria.peluqueria.dto.CategoriaDTO;
 import com.peluqueria.peluqueria.dto.NewCategoriaDTO;
+import com.peluqueria.peluqueria.exception.ResourceNotFoundException;
 import com.peluqueria.peluqueria.models.Categoria;
 import com.peluqueria.peluqueria.repositories.CategoriaRepository;
 import com.peluqueria.peluqueria.services.CategoriaService;
@@ -20,6 +21,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     final ModelMapper modelMapper;
     final CategoriaRepository categoriaRepository;
 
+    @Autowired
     public CategoriaServiceImpl(@Autowired CategoriaRepository repository, ModelMapper mapper){
         this.categoriaRepository = repository;
         this.modelMapper = mapper;
@@ -36,15 +38,15 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     @Transactional(readOnly = true)
-    public CategoriaDTO retrieve(Long id) throws Exception {
-        Categoria categoria = categoriaRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
+    public CategoriaDTO retrieve(Long id)  {
+        Categoria categoria = categoriaRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         return modelMapper.map(categoria, CategoriaDTO.class);
     }
 
     @Override
     @Transactional
-    public CategoriaDTO update(CategoriaDTO categoriaDTO, Long id) throws Exception {
-        Categoria categoria = categoriaRepository.findById(categoriaDTO.getId()).orElseThrow(()-> new Exception("Categoria not found"));
+    public CategoriaDTO update(CategoriaDTO categoriaDTO, Long id)  {
+        Categoria categoria = categoriaRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         categoria.setId(id);
         categoria = modelMapper.map(categoriaDTO, Categoria.class);
         categoriaRepository.save(categoria);
@@ -53,8 +55,8 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     @Transactional
-    public void  delete(Long id) throws Exception {
-        Categoria categoria = categoriaRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
+    public void  delete(Long id)  {
+        Categoria categoria = categoriaRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         categoriaRepository.deleteById(categoria.getId());
     }
 

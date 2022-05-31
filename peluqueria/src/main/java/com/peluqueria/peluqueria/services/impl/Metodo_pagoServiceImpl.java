@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.peluqueria.peluqueria.dto.Metodo_pagoDTO;
 import com.peluqueria.peluqueria.dto.NewMetodo_pagoDTO;
+import com.peluqueria.peluqueria.exception.ResourceNotFoundException;
 import com.peluqueria.peluqueria.models.Metodo_pago;
 import com.peluqueria.peluqueria.repositories.Metodo_pagoRepository;
 import com.peluqueria.peluqueria.services.Metodo_pagoService;
@@ -20,6 +21,7 @@ public class Metodo_pagoServiceImpl implements Metodo_pagoService {
     final ModelMapper modelMapper;
     final Metodo_pagoRepository metodo_pagoRepository;
 
+    @Autowired
     public Metodo_pagoServiceImpl(@Autowired Metodo_pagoRepository repository, ModelMapper mapper){
         this.metodo_pagoRepository = repository;
         this.modelMapper = mapper;
@@ -36,15 +38,15 @@ public class Metodo_pagoServiceImpl implements Metodo_pagoService {
 
     @Override
     @Transactional(readOnly = true)
-    public Metodo_pagoDTO retrieve(Long id) throws Exception {
-        Metodo_pago metodo_pago = metodo_pagoRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
+    public Metodo_pagoDTO retrieve(Long id)  {
+        Metodo_pago metodo_pago = metodo_pagoRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         return modelMapper.map(metodo_pago, Metodo_pagoDTO.class);
     }
 
     @Override
     @Transactional
-    public Metodo_pagoDTO update(Metodo_pagoDTO metodo_pagoDTO, Long id) throws Exception {
-        Metodo_pago metodo_pago = metodo_pagoRepository.findById(metodo_pagoDTO.getId()).orElseThrow(()-> new Exception("Categoria not found"));
+    public Metodo_pagoDTO update(Metodo_pagoDTO metodo_pagoDTO, Long id)  {
+        Metodo_pago metodo_pago = metodo_pagoRepository.findById(metodo_pagoDTO.getId()).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         metodo_pago.setId(id);
         metodo_pago = modelMapper.map(metodo_pagoDTO, Metodo_pago.class);
         metodo_pagoRepository.save(metodo_pago);
@@ -53,8 +55,8 @@ public class Metodo_pagoServiceImpl implements Metodo_pagoService {
 
     @Override
     @Transactional
-    public void delete(Long id) throws Exception {
-        Metodo_pago metodo_pago = metodo_pagoRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
+    public void delete(Long id)  {
+        Metodo_pago metodo_pago = metodo_pagoRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         metodo_pagoRepository.deleteById(metodo_pago.getId());
     }
 

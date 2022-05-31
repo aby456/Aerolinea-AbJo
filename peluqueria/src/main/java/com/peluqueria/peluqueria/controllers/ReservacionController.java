@@ -9,10 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import com.peluqueria.peluqueria.dto.NewReservacionDTO;
 import com.peluqueria.peluqueria.dto.ReservacionDTO;
 import com.peluqueria.peluqueria.services.ReservacionService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,60 +27,50 @@ import org.springframework.web.bind.annotation.PutMapping;
 @RequestMapping("/reservacion")
 public class ReservacionController {
     private final ReservacionService reserv;
+
+    @Autowired
     public ReservacionController(ReservacionService rsvr){
         this.reserv = rsvr;
     }
 
     @PostMapping()
-    public ResponseEntity<?> create(@RequestBody NewReservacionDTO examDTO){
-        try{
-            ReservacionDTO result = reserv.create(examDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(result);
-        }catch(Exception e){
-
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
-
-        }
+    public ResponseEntity<ReservacionDTO> create(@Valid @RequestBody NewReservacionDTO examDTO){
+        
+        ReservacionDTO result = reserv.create(examDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> retrieve(@PathVariable("id") Long id){
-        try {
-            ReservacionDTO result = reserv.retrieve(id);
-            return ResponseEntity.ok().body(result);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
-        }
+    public ResponseEntity<ReservacionDTO> retrieve(@PathVariable("id") Long id){
+        
+        ReservacionDTO result = reserv.retrieve(id);
+        return ResponseEntity.ok().body(result);
+        
     }
 
     @GetMapping()
-    public ResponseEntity<?> list(){
-        try {
-            List<ReservacionDTO> result = reserv.list();
-            return ResponseEntity.ok().body(result);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
-        }
+    public ResponseEntity<List<ReservacionDTO>> list(){
+        
+        List<ReservacionDTO> result = reserv.list();
+        return ResponseEntity.ok().body(result);
+        
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@RequestBody ReservacionDTO reservacionDTO, @PathVariable("id") Long id){
-        try {
-            ReservacionDTO result = reserv.update(reservacionDTO,id);
-            return ResponseEntity.ok().body(result);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
-        }
+    public ResponseEntity<ReservacionDTO> update(@RequestBody ReservacionDTO reservacionDTO, @PathVariable("id") Long id){
+        
+        ReservacionDTO result = reserv.update(reservacionDTO,id);
+        return ResponseEntity.ok().body(result);
+        
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable("id") Long id){
-        try {
-            reserv.delete(id);
-            return ResponseEntity.ok().body("reservory Delete");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e);
-        }
+    public ResponseEntity<String> delete(@PathVariable("id") Long id){
+        
+        reserv.delete(id);
+        return ResponseEntity.ok().body("reservory Delete");
+        
     }
 
 

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import com.peluqueria.peluqueria.dto.NewServicioDTO;
 import com.peluqueria.peluqueria.dto.ServicioDTO;
+import com.peluqueria.peluqueria.exception.ResourceNotFoundException;
 import com.peluqueria.peluqueria.models.Servicio;
 import com.peluqueria.peluqueria.repositories.ServicioRepository;
 import com.peluqueria.peluqueria.services.ServicioService;
@@ -39,16 +40,16 @@ public class ServicioServiceImpl implements ServicioService {
 
     @Override
     @Transactional(readOnly = true)
-    public ServicioDTO retrieve(Long id) throws Exception {
-        Servicio servicio = servicioRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
+    public ServicioDTO retrieve(Long id)  {
+        Servicio servicio = servicioRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         return modelMapper.map(servicio, ServicioDTO.class);
         
     }
 
     @Override
     @Transactional
-    public ServicioDTO update(ServicioDTO servicioDTO , Long id) throws Exception {
-        Servicio servicio = servicioRepository.findById(servicioDTO.getId()).orElseThrow(()-> new Exception("Categoria not found"));
+    public ServicioDTO update(ServicioDTO servicioDTO , Long id)  {
+        Servicio servicio = servicioRepository.findById(servicioDTO.getId()).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         servicio.setId(id);
         servicio = modelMapper.map(servicioDTO, Servicio.class);
         servicioRepository.save(servicio);
@@ -57,8 +58,8 @@ public class ServicioServiceImpl implements ServicioService {
 
     @Override
     @Transactional
-    public void delete(Long id) throws Exception {
-        Servicio servicio = servicioRepository.findById(id).orElseThrow(()-> new Exception("Categoria not found"));
+    public void delete(Long id)  {
+        Servicio servicio = servicioRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
         servicioRepository.deleteById(servicio.getId());
        
     }

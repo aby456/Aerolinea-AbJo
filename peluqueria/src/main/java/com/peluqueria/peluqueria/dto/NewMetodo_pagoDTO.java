@@ -1,5 +1,7 @@
 package com.peluqueria.peluqueria.dto;
 
+import javax.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,6 +10,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class NewMetodo_pagoDTO {
-    private Long id;
+    @NotNull(message = "Metodo width can't be null.")
     private String metodo;
 }
