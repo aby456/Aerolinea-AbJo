@@ -17,10 +17,8 @@ public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "ESTADO") 
-    private String estado;
-    @Column(name = "COMPARTIMIENTO") 
-    private String compartimiento;
+    @Column(name = "NOMBRE_CATEGORIA") 
+    private String nombre_categoria;
 
     @OneToMany(mappedBy = "categoria")
     private List<Servicio> servicio;

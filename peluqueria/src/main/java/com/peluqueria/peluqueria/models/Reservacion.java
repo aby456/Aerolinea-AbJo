@@ -32,8 +32,6 @@ public class Reservacion {
     private String fecha;
     @Column(name = "DISPONIBILIDAD")
     private Boolean disponibilidad;
-    @Column(name = "COSTO_PASAJE")
-    private double costo_pasaje;
 
     @ManyToOne
     @JoinColumn(name="CLIENTE_ID", nullable=false)

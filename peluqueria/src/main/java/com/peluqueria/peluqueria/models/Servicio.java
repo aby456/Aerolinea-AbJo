@@ -23,12 +23,20 @@ public class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "LINEA")
-    private String linea;
-    @Column(name = "NUMERO_ASIENTOS")
-    private int numero_asientos;
-    @Column(name = "COMPARTIMIENTOS")
-    private int compartimientos;
+    @Column(name = "NOMBRE_SERVICIO")
+    private String nombre_servicio;
+    @Column(name = "PRECIO_SERVICIO")
+    private double precio_servicio;
+    @Column(name = "TIEMPO_ESTIMADO_SERVICIO")
+    private double tiempo_estimado_servicio;
+
+
+
+
+
+
+
+
 
     @ManyToMany(mappedBy = "servicio")
     private List<Reservacion> reservacion;
