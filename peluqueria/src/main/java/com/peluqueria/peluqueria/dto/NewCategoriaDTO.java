@@ -10,8 +10,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class NewCategoriaDTO {
-    @NotNull(message = "Estado width can't be null.")
-    private String estado;
-    @NotNull(message = "Compartimiento width can't be null.")
-    private String compartimiento;
+    @NotNull(message = "Name category width can't be null.")
+    private String nombre_categoria;
 }
