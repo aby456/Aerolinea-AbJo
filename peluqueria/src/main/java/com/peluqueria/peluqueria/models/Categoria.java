@@ -18,7 +18,7 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "NOMBRE_CATEGORIA") 
-    private String nombre_categoria;
+    private String nombreCategoria;
 
     @OneToMany(mappedBy = "categoria")
     private List<Servicio> servicio;

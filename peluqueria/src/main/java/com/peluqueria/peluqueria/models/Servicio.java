@@ -24,11 +24,11 @@ public class Servicio {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @Column(name = "NOMBRE_SERVICIO")
-    private String nombre_servicio;
+    private String nombreServicio;
     @Column(name = "PRECIO_SERVICIO")
-    private double precio_servicio;
+    private double precioServicio;
     @Column(name = "TIEMPO_ESTIMADO_SERVICIO")
-    private double tiempo_estimado_servicio;
+    private double tiempoEstimadoServicio;
 
 
 
