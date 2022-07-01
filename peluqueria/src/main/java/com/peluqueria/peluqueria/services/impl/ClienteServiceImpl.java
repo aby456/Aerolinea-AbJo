@@ -1,15 +1,12 @@
 package com.peluqueria.peluqueria.services.impl;
-
 import java.util.List;
 import java.util.stream.Collectors;
-
 import com.peluqueria.peluqueria.dto.ClienteDTO;
 import com.peluqueria.peluqueria.dto.NewClienteDTO;
 import com.peluqueria.peluqueria.exception.ResourceNotFoundException;
 import com.peluqueria.peluqueria.models.Cliente;
 import com.peluqueria.peluqueria.repositories.ClienteRepository;
 import com.peluqueria.peluqueria.services.ClienteService;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
