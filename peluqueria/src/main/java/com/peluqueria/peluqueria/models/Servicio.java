@@ -38,7 +38,7 @@ public class Servicio {
 
 
 
-    @ManyToMany(mappedBy = "servicio")
+    @OneToMany(mappedBy = "servicio")
     private List<Reservacion> reservacion;
 
     @ManyToOne

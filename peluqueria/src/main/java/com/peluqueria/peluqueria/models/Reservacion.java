@@ -44,13 +44,9 @@ public class Reservacion {
 
 
     
-    @JoinTable(
-        name = "RESERVACION",
-        joinColumns = @JoinColumn(name = "FK_RESERVACION", nullable = false),
-        inverseJoinColumns = @JoinColumn(name="FK_SERVICIO", nullable = false)
-    )
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Servicio> servicio;
+    @ManyToOne
+    @JoinColumn(name="SERVICIO_ID", nullable=false)
+    private Servicio servicio; 
 
 
 
