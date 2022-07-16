@@ -24,69 +24,69 @@ public class ServicioServiceImpl implements ServicioService {
 
     final ModelMapper modelMapper;
     final ServicioRepository repository;
-    final ReservacionRepository ReservacionRepository;
+    final ReservacionRepository reservacionRepository;
 
     public ServicioServiceImpl(ServicioRepository r, ReservacionRepository er, ModelMapper m)
     {
         this.modelMapper = m;
         this.repository = r;
-        this.ReservacionRepository = er;
+        this.reservacionRepository = er;
     }
 
 
     @Override
     @Transactional
-    public ServicioDTO create(Long idReservacion, NewServicioDTO ServicioDTO) {
-        Reservacion reservacion = ReservacionRepository.findById(idReservacion)
+    public ServicioDTO create(Long idReservacion, NewServicioDTO servicioDTO) {
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
             .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
-        Servicio Servicio = modelMapper.map(ServicioDTO, Servicio.class);    
-        Servicio.setReservacion(reservacion);
-        repository.save(Servicio);
-        return modelMapper.map(Servicio, ServicioDTO.class); 
+        Servicio servicio = modelMapper.map(servicioDTO, Servicio.class);    
+        servicio.setReservacion(reservacion);
+        repository.save(servicio);
+        return modelMapper.map(servicio, ServicioDTO.class); 
     }
 
     @Override
     @Transactional(readOnly=true)
     public ServicioReservacionDTO retrieve(Long idReservacion, Long id) {
-        Reservacion Reservacion = ReservacionRepository.findById(idReservacion)
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
             .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
-        Servicio Servicio = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
-        Servicio.setReservacion(Reservacion);
-        return modelMapper.map(Servicio, ServicioReservacionDTO.class);
+        Servicio servicio = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
+        servicio.setReservacion(reservacion);
+        return modelMapper.map(servicio, ServicioReservacionDTO.class);
     }
 
     @Override
     @Transactional
-    public ServicioReservacionDTO update(ServicioDTO ServicioDTO, Long idReservacion, Long id) {
-        Reservacion Reservacion = ReservacionRepository.findById(idReservacion)
+    public ServicioReservacionDTO update(ServicioDTO servicioDTO, Long idReservacion, Long id) {
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
         .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
-        Servicio Servicio = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
-        Servicio = modelMapper.map(ServicioDTO, Servicio.class);
-        Servicio.setReservacion(Reservacion);
-        repository.save(Servicio);       
-        return modelMapper.map(Servicio, ServicioReservacionDTO.class);
+        Servicio servicio = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
+        servicio = modelMapper.map(servicioDTO, Servicio.class);
+        servicio.setReservacion(reservacion);
+        repository.save(servicio);       
+        return modelMapper.map(servicio, ServicioReservacionDTO.class);
     }
 
 
     @Override
     @Transactional
     public void delete(Long idReservacion, Long id) {
-        Reservacion Reservacion = ReservacionRepository.findById(idReservacion)
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
         .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
-        Servicio Servicio = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
-        Servicio.setReservacion(Reservacion);
-        repository.deleteById(Servicio.getId());  
+        Servicio servicio = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
+        servicio.setReservacion(reservacion);
+        repository.deleteById(servicio.getId());  
     }
 
     @Override
     @Transactional(readOnly=true)
     public List<ServicioDTO> list(Long idReservacion) {
-        Reservacion Reservacion = ReservacionRepository.findById(idReservacion)
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
             .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
-        List<Servicio> Servicios = repository.findByReservacion(Reservacion);
-        if(Servicios.isEmpty()) throw new NoContentException("Servicios is empty");
+        List<Servicio> servicios = repository.findByReservacion(reservacion);
+        if(servicios.isEmpty()) throw new NoContentException("Servicios is empty");
         //Lambda ->
-        return Servicios.stream().map(q -> modelMapper.map(q, ServicioDTO.class) )
+        return servicios.stream().map(q -> modelMapper.map(q, ServicioDTO.class) )
             .collect(Collectors.toList());
     }
 

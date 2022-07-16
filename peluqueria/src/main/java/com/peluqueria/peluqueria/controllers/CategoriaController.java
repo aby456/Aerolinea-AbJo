@@ -28,21 +28,21 @@ public class CategoriaController {
     }
 
     /* ================ CREATE ================ */
-    @PostMapping("/{id}/Servicio/{idServicio}/Categoria")
+    @PostMapping("/{id}/servicio/{idServicio}/categoria")
     public ResponseEntity<List<CategoriaDTO>> create(@PathVariable("id") Long id, @PathVariable("idServicio") Long idServicio, @Valid @RequestBody List<NewCategoriaDTO> categoriaDTO){
         List<CategoriaDTO> categoriaDTOs = service.create(id, idServicio, categoriaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaDTOs);        
     }
 
     /* ================ DELETE ================ */
-    @DeleteMapping("/{id}/Servicio/{idServicio}/Categoria")
+    @DeleteMapping("/{id}/servicio/{idServicio}/categoria")
     public ResponseEntity<List<CategoriaDTO>> delete(@PathVariable("id") Long id, @PathVariable("idServicio") Long idServicio){
         service.remove(id, idServicio);
         return ResponseEntity.noContent().build();
     }
 
     /* ================ LIST ================ */
-    @GetMapping("/{id}/Servicio/{idServicio}/Categoria")
+    @GetMapping("/{id}/servicio/{idServicio}/categoria")
     public ResponseEntity<List<CategoriaDTO>> list(@PathVariable("id") Long id, @PathVariable("idServicio") Long idServicio){
         List<CategoriaDTO> categoriaDTO = service.list(id, idServicio);
         return ResponseEntity.status(HttpStatus.OK).body(categoriaDTO);        

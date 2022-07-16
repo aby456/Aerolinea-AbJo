@@ -44,10 +44,10 @@ public class CategoriaServiceImpl implements CategoriaService {
         servicio.setReservacion(reservacion);
         List<CategoriaDTO> result = new ArrayList<CategoriaDTO>();
         for(NewCategoriaDTO op : categorias){
-            Categoria Categoria = modelMapper.map(op, Categoria.class);
-            Categoria.setServicio(servicio);
-            repository.save(Categoria);
-            result.add(modelMapper.map(Categoria, CategoriaDTO.class));
+            Categoria categoria = modelMapper.map(op, Categoria.class);
+            categoria.setServicio(servicio);
+            repository.save(categoria);
+            result.add(modelMapper.map(categoria, CategoriaDTO.class));
         }
         /*Categorias.forEach(op -> {
         });        */

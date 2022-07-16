@@ -34,37 +34,37 @@ public class ServicioController {
     }
 
     /* ================ CREATE ================ */
-    @PostMapping("/{id}/Servicio")
+    @PostMapping("/{id}/servicio")
     public ResponseEntity<ServicioDTO> create(@PathVariable("id") Long id, @Valid @RequestBody NewServicioDTO servicioDTO){
         ServicioDTO servicioDTOs = srvo.create(id, servicioDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioDTOs);        
     }
 
     /* ================ RETRIEVE ================ */
-    @GetMapping("/{idReservacion}/Servicio/{id}")
+    @GetMapping("/{idReservacion}/servicio/{id}")
     public ResponseEntity<ServicioReservacionDTO> retrive(@PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
         ServicioReservacionDTO result = srvo.retrieve(idReservacion, id);
         return ResponseEntity.ok().body(result);        
     }
 
     /* ================ UPDATE ================ */
-    @PutMapping("/{idReservacion}/Servicio/{id}")
+    @PutMapping("/{idReservacion}/servicio/{id}")
     public ResponseEntity<ServicioReservacionDTO> update(@RequestBody ServicioDTO servicioDTO, @PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
         ServicioReservacionDTO result = srvo.update(servicioDTO, idReservacion, id);
         return ResponseEntity.ok().body(result);
     }
 
     /* ================ DELETE ================ */
-    @DeleteMapping("/{idReservacion}/Servicio/{id}")
+    @DeleteMapping("/{idReservacion}/servicio/{id}")
     public ResponseEntity<Void> delete(@PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
         srvo.delete(idReservacion, id);
         return ResponseEntity.noContent().build();
     }
 
     /* ================ LIST ================ */
-    @GetMapping("/{id}/Servicio")
+    @GetMapping("/{id}/servicio")
     public ResponseEntity<List<ServicioDTO>> list(@PathVariable("id") Long id){
-        List<ServicioDTO> Servicios = srvo.list(id);
-        return ResponseEntity.ok().body(Servicios);        
+        List<ServicioDTO> servicios = srvo.list(id);
+        return ResponseEntity.ok().body(servicios);        
     }
 }
