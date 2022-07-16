@@ -19,8 +19,6 @@ public class Categoria {
     private Long id;
     @Column(name = "NOMBRE_CATEGORIA") 
     private String nombreCategoria;
-    @Column(name = "CORRECT")
-    private boolean correct;
 
     @ManyToOne
     @JoinColumn(name="SERVICIO_ID", nullable=false)

@@ -24,49 +24,49 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReservacionServiceImpl implements ReservacionService {
 
     final ModelMapper modelMapper;
-    final ReservacionRepository ReservacionRepository;
-
+    final ReservacionRepository reservacionRepository;
 
     public ReservacionServiceImpl(ReservacionRepository repository, ModelMapper mapper){
-        this.ReservacionRepository = repository;
+        this.reservacionRepository = repository;
         this.modelMapper = mapper;
     }
 
     @Override
     @Transactional
-    public ReservacionDTO create(NewReservacionDTO ReservacionDTO) {
-        Reservacion Reservacion = modelMapper.map(ReservacionDTO, Reservacion.class);
-        ReservacionRepository.save(Reservacion);
-        return modelMapper.map(Reservacion, ReservacionDTO.class);
+    public ReservacionDTO create(NewReservacionDTO reservacionDTO) {
+        Reservacion reservacion = modelMapper.map(reservacionDTO, Reservacion.class);
+        reservacionRepository.save(reservacion);        
+        return modelMapper.map(reservacion, ReservacionDTO.class); 
     }
 
     @Override
     @Transactional(readOnly = true)
-    public ReservacionDTO retrieve(Long id)  {
-        Reservacion Reservacion = ReservacionRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
-        return modelMapper.map(Reservacion, ReservacionDTO.class);
+    public ReservacionDTO retrieve(Long id) {
+        Reservacion reservacion = reservacionRepository.findById(id)
+            .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
+        return modelMapper.map(reservacion, ReservacionDTO.class);
     }
-
 
     @Override
     @Transactional
-    public ReservacionDTO update(ReservacionDTO ReservacionDTO, Long id) {
-        Reservacion Reservacion = ReservacionRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Exam not found"));        
+    public ReservacionDTO update(ReservacionDTO reservacionDTO, Long id) {
+        Reservacion Reservacion = reservacionRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));        
               
-        Reservacion ReservacionUpdated = modelMapper.map(ReservacionDTO, Reservacion.class);
+        Reservacion reservacionUpdated = modelMapper.map(reservacionDTO, Reservacion.class);
         //Keeping values
-        ReservacionUpdated.setCreatedBy(Reservacion.getCreatedBy());
-        ReservacionUpdated.setCreatedDate(Reservacion.getCreatedDate());
-        ReservacionRepository.save(ReservacionUpdated);   
-        return modelMapper.map(ReservacionUpdated, ReservacionDTO.class);
+        reservacionUpdated.setCreatedBy(Reservacion.getCreatedBy());
+        reservacionUpdated.setCreatedDate(Reservacion.getCreatedDate());
+        reservacionRepository.save(reservacionUpdated);   
+        return modelMapper.map(reservacionUpdated, ReservacionDTO.class);
     }
 
     @Override
     @Transactional
-    public void delete(Long id)  {
-        Reservacion Reservacion = ReservacionRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
-        ReservacionRepository.deleteById(Reservacion.getId());
+    public void delete(Long id) {
+        Reservacion reservacion = reservacionRepository.findById(id)
+                .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));        
+        reservacionRepository.deleteById(reservacion.getId());        
     }
 
     @Override
@@ -76,15 +76,15 @@ public class ReservacionServiceImpl implements ReservacionService {
                     PageRequest.of(page, size) 
                 :   PageRequest.of(page, size,  Sort.by(sort));
 
-        Page<Reservacion> exams = ReservacionRepository.findAll(pageable);
-        if(exams.isEmpty()) throw new NoContentException("Exams is empty");
-        return exams.stream().map(exam -> modelMapper.map(exam, ReservacionListDTO.class))
-            .collect(Collectors.toList()); 
+        Page<Reservacion> reservacions = reservacionRepository.findAll(pageable);
+        if(reservacions.isEmpty()) throw new NoContentException("Reservacions is empty");
+        return reservacions.stream().map(reservacion -> modelMapper.map(reservacion, ReservacionListDTO.class))
+            .collect(Collectors.toList());        
     }
 
     @Override
-    public long count() {
-        return ReservacionRepository.count();
+    public long count() {        
+        return reservacionRepository.count();
     }
 
     
