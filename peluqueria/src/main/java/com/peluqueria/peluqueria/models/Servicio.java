@@ -32,11 +32,11 @@ public class Servicio {
 
 
     @ManyToOne
-    @JoinColumn(name="SERVICIO_ID", nullable=false)
+    @JoinColumn(name="RESERVACION_ID", nullable=false)
     private Reservacion reservacion;
 
     
-    @OneToMany(mappedBy = "categoria")
+    @OneToMany(mappedBy = "servicio")
     private List<Categoria> categoria;
 
 }

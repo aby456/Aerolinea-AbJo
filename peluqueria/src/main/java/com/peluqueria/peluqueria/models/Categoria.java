@@ -21,7 +21,7 @@ public class Categoria {
     private String nombreCategoria;
 
     @ManyToOne
-    @JoinColumn(name="CATEGORIA_ID", nullable=false)
+    @JoinColumn(name="SERVICIO_ID", nullable=false)
     private Servicio servicio;
 
 }
