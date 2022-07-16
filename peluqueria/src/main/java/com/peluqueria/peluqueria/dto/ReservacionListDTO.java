@@ -7,6 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CategoriaDTO extends NewCategoriaDTO {
+public class ReservacionListDTO {
     private Long id;
+    private String hora;
+    private String lugar;
+    private String fecha;
+    private Boolean disponibilidad;
 }

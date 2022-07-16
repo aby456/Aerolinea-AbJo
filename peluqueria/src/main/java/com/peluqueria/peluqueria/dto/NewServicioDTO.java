@@ -12,8 +12,6 @@ import lombok.Setter;
 public class NewServicioDTO {
     @NotNull(message = "Nombre Servicio width can't be null.")
     private String nombreServicio;
-    @NotNull(message = "Precio Servicio width can't be null.")
     private double precioServicio;
-    @NotNull(message = "Tiempo Estimado Servicio width can't be null.")
     private double tiempoEstimadoServicio;
 }

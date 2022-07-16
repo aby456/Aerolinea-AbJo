@@ -7,6 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CategoriaDTO extends NewCategoriaDTO {
-    private Long id;
+public class ServicioReservacionDTO extends ServicioDTO{
+    private ReservacionDTO reservacion;
 }

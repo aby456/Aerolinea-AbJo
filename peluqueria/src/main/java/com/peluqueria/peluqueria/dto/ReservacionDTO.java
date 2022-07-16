@@ -1,4 +1,5 @@
 package com.peluqueria.peluqueria.dto;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

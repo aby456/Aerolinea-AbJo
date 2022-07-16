@@ -16,6 +16,5 @@ public class NewReservacionDTO {
     private String lugar;
     @NotNull(message = "Fecha width can't be null.")
     private String fecha;
-    @NotNull(message = "disponibilidad width can't be null.")
     private Boolean disponibilidad;
 }

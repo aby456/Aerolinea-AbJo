@@ -1,5 +1,8 @@
 package com.peluqueria.peluqueria.dto;
-import lombok.AllArgsConstructor;
+
+
+import java.util.List;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,8 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class ServicioDTO extends NewServicioDTO {
     private Long id;
-    
+    private List<CategoriaDTO> categoria;
 }
