@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/categoria")
+@RequestMapping("/reservacion")
 public class CategoriaController {
 
     final CategoriaService service;
@@ -28,21 +28,21 @@ public class CategoriaController {
     }
 
     /* ================ CREATE ================ */
-    @PostMapping("/{id}/Servicio/{idServicio}/Categorias")
+    @PostMapping("/{id}/Servicio/{idServicio}/Categoria")
     public ResponseEntity<List<CategoriaDTO>> create(@PathVariable("id") Long id, @PathVariable("idServicio") Long idServicio, @Valid @RequestBody List<NewCategoriaDTO> categoriaDTO){
         List<CategoriaDTO> categoriaDTOs = service.create(id, idServicio, categoriaDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(categoriaDTOs);        
     }
 
     /* ================ DELETE ================ */
-    @DeleteMapping("/{id}/Servicio/{idServicio}/Categorias")
+    @DeleteMapping("/{id}/Servicio/{idServicio}/Categoria")
     public ResponseEntity<List<CategoriaDTO>> delete(@PathVariable("id") Long id, @PathVariable("idServicio") Long idServicio){
         service.remove(id, idServicio);
         return ResponseEntity.noContent().build();
     }
 
     /* ================ LIST ================ */
-    @GetMapping("/{id}/Servicio/{idServicio}/Categorias")
+    @GetMapping("/{id}/Servicio/{idServicio}/Categoria")
     public ResponseEntity<List<CategoriaDTO>> list(@PathVariable("id") Long id, @PathVariable("idServicio") Long idServicio){
         List<CategoriaDTO> categoriaDTO = service.list(id, idServicio);
         return ResponseEntity.status(HttpStatus.OK).body(categoriaDTO);        

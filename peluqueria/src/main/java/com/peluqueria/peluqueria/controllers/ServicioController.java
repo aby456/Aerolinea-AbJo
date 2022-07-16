@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/servicio")
+@RequestMapping("/reservacion")
 public class ServicioController {
     
     
@@ -34,7 +34,7 @@ public class ServicioController {
     }
 
     /* ================ CREATE ================ */
-    @PostMapping("/{id}/Servicios")
+    @PostMapping("/{id}/Servicio")
     public ResponseEntity<ServicioDTO> create(@PathVariable("id") Long id, @Valid @RequestBody NewServicioDTO servicioDTO){
         ServicioDTO servicioDTOs = srvo.create(id, servicioDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioDTOs);        
@@ -55,14 +55,14 @@ public class ServicioController {
     }
 
     /* ================ DELETE ================ */
-    @DeleteMapping("/{idReservacion}/Servicios/{id}")
+    @DeleteMapping("/{idReservacion}/Servicio/{id}")
     public ResponseEntity<Void> delete(@PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
         srvo.delete(idReservacion, id);
         return ResponseEntity.noContent().build();
     }
 
     /* ================ LIST ================ */
-    @GetMapping("/{id}/Servicios")
+    @GetMapping("/{id}/Servicio")
     public ResponseEntity<List<ServicioDTO>> list(@PathVariable("id") Long id){
         List<ServicioDTO> Servicios = srvo.list(id);
         return ResponseEntity.ok().body(Servicios);        
