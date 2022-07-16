@@ -17,7 +17,6 @@ import com.peluqueria.peluqueria.repositories.ServicioRepository;
 import com.peluqueria.peluqueria.services.CategoriaService;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

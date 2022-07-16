@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.peluqueria.peluqueria.dto.NewServicioDTO;
 import com.peluqueria.peluqueria.dto.ServicioDTO;
-import com.peluqueria.peluqueria.dto.ServicioReservacionDTO;
+//import com.peluqueria.peluqueria.dto.ServicioReservacionDTO;
 
 public interface ServicioService {
 
