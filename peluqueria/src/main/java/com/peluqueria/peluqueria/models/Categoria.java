@@ -1,11 +1,11 @@
 package com.peluqueria.peluqueria.models;
-import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -20,7 +20,8 @@ public class Categoria {
     @Column(name = "NOMBRE_CATEGORIA") 
     private String nombreCategoria;
 
-    @OneToMany(mappedBy = "categoria")
-    private List<Servicio> servicio;
+    @ManyToOne
+    @JoinColumn(name="CATEGORIA_ID", nullable=false)
+    private Servicio servicio;
 
 }

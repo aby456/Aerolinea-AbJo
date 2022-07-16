@@ -1,16 +1,14 @@
 package com.peluqueria.peluqueria.models;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -33,6 +31,7 @@ public class Reservacion {
     @Column(name = "DISPONIBILIDAD")
     private Boolean disponibilidad;
 
+
     @ManyToOne
     @JoinColumn(name="CLIENTE_ID", nullable=false)
     private Cliente cliente; 
@@ -42,11 +41,9 @@ public class Reservacion {
     @JoinColumn(name="METODO_PAGO_ID", nullable=false)
     private Metodo_pago metodopago; 
 
-
     
-    @ManyToOne
-    @JoinColumn(name="SERVICIO_ID", nullable=false)
-    private Servicio servicio; 
+    @OneToMany(mappedBy = "servicio")
+    private List<Servicio> servicio;  
 
 
 

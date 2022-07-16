@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -32,17 +31,12 @@ public class Servicio {
 
 
 
-
-
-
-
-
-
-    @OneToMany(mappedBy = "servicio")
-    private List<Reservacion> reservacion;
-
     @ManyToOne
-    @JoinColumn(name="CATEGORIA_ID", nullable=false)
-    private Categoria categoria; 
+    @JoinColumn(name="SERVICIO_ID", nullable=false)
+    private Reservacion reservacion;
+
+    
+    @OneToMany(mappedBy = "categoria")
+    private List<Categoria> categoria;
 
 }
