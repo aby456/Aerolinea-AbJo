@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,7 +25,8 @@ public class Metodo_pago {
     @Column(name = "METODO")
     private String metodo;
 
-    @OneToMany(mappedBy = "metodopago")
-    private List<Reservacion> reservacion;
+    @ManyToOne
+    @JoinColumn(name="RESERVACION_ID", nullable=false)
+    private Reservacion reservacion;
 
 }

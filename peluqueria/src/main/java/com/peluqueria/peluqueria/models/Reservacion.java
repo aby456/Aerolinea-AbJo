@@ -35,14 +35,11 @@ public class Reservacion {
     private Boolean disponibilidad;
 
 
-    @ManyToOne
-    @JoinColumn(name="CLIENTE_ID", nullable=false)
-    private Cliente cliente; 
     
 
-    @ManyToOne
-    @JoinColumn(name="METODO_PAGO_ID", nullable=false)
-    private Metodo_pago metodopago; 
+    // @ManyToOne
+    // @JoinColumn(name="METODO_PAGO_ID", nullable=false)
+    // private Metodo_pago metodopago; 
 
     @Column(name = "CREATED_DATE")    
     private Calendar createdDate;
@@ -70,6 +67,10 @@ public class Reservacion {
     @OneToMany(mappedBy = "reservacion")
     private List<Servicio> servicio;  
 
+    @OneToMany(mappedBy = "reservacion")
+    private List<Cliente> cliente;
+
+    
 
 
 }
