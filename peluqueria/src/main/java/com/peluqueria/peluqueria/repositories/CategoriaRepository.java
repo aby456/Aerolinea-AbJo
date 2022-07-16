@@ -1,6 +1,7 @@
 package com.peluqueria.peluqueria.repositories;
 
 import com.peluqueria.peluqueria.models.Categoria;
+import com.peluqueria.peluqueria.models.Servicio;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria,Long> {
-    public List<Categoria> findByNombreCategoria(String criteria);
+    public List<Categoria> findByServicio(Servicio servicio);
 }
