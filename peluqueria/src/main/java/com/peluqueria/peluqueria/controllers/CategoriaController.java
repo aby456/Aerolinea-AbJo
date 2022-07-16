@@ -9,66 +9,44 @@ import javax.validation.Valid;
 import com.peluqueria.peluqueria.dto.CategoriaDTO;
 import com.peluqueria.peluqueria.dto.NewCategoriaDTO;
 import com.peluqueria.peluqueria.services.CategoriaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/categoria")
 public class CategoriaController {
-    private final CategoriaService categ;
 
-    @Autowired
-    public CategoriaController(CategoriaService cat){
-        this.categ = cat;
+    final CategoriaService service;
+
+    public CategoriaController(CategoriaService srv){
+        this.service = srv;
     }
 
-    @PostMapping()
-    public ResponseEntity<CategoriaDTO> create(@Valid @RequestBody NewCategoriaDTO categoriaDTO){
-        
-        CategoriaDTO result = categ.create(categoriaDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
-        
+    /* ================ CREATE ================ */
+    @PostMapping("/{id}/Servicio/{idServicio}/Categorias")
+    public ResponseEntity<List<CategoriaDTO>> create(@PathVariable("id") Long id, @PathVariable("idServicio") Long idServicio, @Valid @RequestBody List<NewCategoriaDTO> categoriaDTO){
+        List<CategoriaDTO> categoriaDTOs = service.create(id, idServicio, categoriaDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoriaDTOs);        
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CategoriaDTO> retrieve(@PathVariable("id") Long id){
-        
-        CategoriaDTO result = categ.retrieve(id);
-        return ResponseEntity.ok().body(result);
-        
+    /* ================ DELETE ================ */
+    @DeleteMapping("/{id}/Servicio/{idServicio}/Categorias")
+    public ResponseEntity<List<CategoriaDTO>> delete(@PathVariable("id") Long id, @PathVariable("idServicio") Long idServicio){
+        service.remove(id, idServicio);
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping()
-    public ResponseEntity<List<CategoriaDTO>> list(){
-        
-        List<CategoriaDTO> result = categ.list();
-        return ResponseEntity.ok().body(result);
-        
+    /* ================ LIST ================ */
+    @GetMapping("/{id}/Servicio/{idServicio}/Categorias")
+    public ResponseEntity<List<CategoriaDTO>> list(@PathVariable("id") Long id, @PathVariable("idServicio") Long idServicio){
+        List<CategoriaDTO> categoriaDTO = service.list(id, idServicio);
+        return ResponseEntity.status(HttpStatus.OK).body(categoriaDTO);        
     }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<CategoriaDTO> update(@RequestBody CategoriaDTO categoriaDTO, @PathVariable("id") Long id){
-        
-        CategoriaDTO result = categ.update(categoriaDTO,id);
-        return ResponseEntity.ok().body(result);
-        
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id){
-        
-        categ.delete(id);
-        return ResponseEntity.ok().body("category Delete");
-        
-    }
-
-
-
 
 
 
