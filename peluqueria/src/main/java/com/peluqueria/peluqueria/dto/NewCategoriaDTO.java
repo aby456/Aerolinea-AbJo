@@ -12,4 +12,5 @@ import lombok.Setter;
 public class NewCategoriaDTO {
     @NotNull(message = "Name category width can't be null.")
     private String nombreCategoria;
+    private boolean correct;
 }
