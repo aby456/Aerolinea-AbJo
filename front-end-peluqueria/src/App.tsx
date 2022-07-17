@@ -1,9 +1,6 @@
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Home } from "./components/Home";
-//import { ExamList } from "./components/exam/ExamList";
-//import { ExamForm } from "./components/exam/ExamForm";
-//import { ExamCard } from "./components/exam/ExamCard";
 import { ReservacionList } from "./components/reservacion/ReservacionList";
 import { ReservacionForm  } from "./components/reservacion/ReservacionForm";
 import { ReservacionCard } from "./components/reservacion/ReservacionCard";
