@@ -1,4 +1,5 @@
 import { Routes, Route, Link } from "react-router-dom";
+import logo from '../src/logo.svg'
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Home } from "./components/Home";
 import { ReservacionList } from "./components/reservacion/ReservacionList";
@@ -6,21 +7,24 @@ import { ReservacionForm  } from "./components/reservacion/ReservacionForm";
 import { ReservacionCard } from "./components/reservacion/ReservacionCard";
 
 const title = "Peluqueria AbJo";
-const description = "Aplicación web para la reservacion de una peluqueria";
+const description = "Aplicación web para la reservacion en una peluqueria";
 
 const App: React.FC = () => {
   return (
     <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">        
+      <nav className="navbar navbar-expand navbar-dark bg-dark"> 
+            
         <Link to={"/"}  className="navbar-brand">
-          NRC 6515
+          <img src= {logo} className="d-block mx-auto mb-4" height="50" alt="logo"/> 
         </Link>
-        <div className="navbar-nav mr-auto">
-          <li className="nav-item">
-            <Link to={"/reservacion"} className="nav-link">
-              Reservacion
-            </Link>
-          </li>          
+        <div className="navbar-nav mr-auto ">
+          <nav className="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item active" aria-current="page" ><a href="/reservacion">Reservacion</a></li>
+              <li className="breadcrumb-item"><a href="/cliente">Cliente</a></li>
+              <li className="breadcrumb-item"><a href="/servicio">Servicio</a></li>
+            </ol>
+          </nav>          
         </div>
       </nav>
       <div className="container mt-3">
