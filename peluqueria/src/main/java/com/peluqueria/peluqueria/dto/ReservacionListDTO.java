@@ -12,5 +12,5 @@ public class ReservacionListDTO {
     private String hora;
     private String lugar;
     private String fecha;
-    private Boolean disponibilidad;
+    private int disponibilidad;
 }

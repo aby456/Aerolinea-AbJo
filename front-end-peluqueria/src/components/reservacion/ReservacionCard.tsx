@@ -2,24 +2,24 @@ import { useEffect, useState } from "react";
 import { FaArrowLeft, FaTrash } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
-import IExamModel from "../../models/Exam";
-import ExamService from "../../services/ExamServices";
+import IReservacionModel from "../../models/Reservacion";
+import ReservacionService from "../../services/ReservacionServices";
 
-export const ExamCard = () => {
+export const ReservacionCard = () => {
   const { id }= useParams();
 
-  const [exam, setExam] = useState<IExamModel>();
+  const [reservacion, setReservacion] = useState<IReservacionModel>();
 
   useEffect(() => {
     if (id)
-      getExam(id);
+      getReservacion(id);
   }, [id]);
 
 
-  const getExam = (id: any) => {
-    ExamService.retrieve(id)
+  const getReservacion = (id: any) => {
+    ReservacionService.retrieve(id)
       .then((response: any) => {
-        setExam(response.data); //Víncula el resultado del servicio con la función del Hook useState
+        setReservacion(response.data); //Víncula el resultado del servicio con la función del Hook useState
         console.log(response.data);
       })
       .catch((e: Error) => {
@@ -30,19 +30,17 @@ export const ExamCard = () => {
     return (
       <div>
       { 
-        exam ? (
+        reservacion ? (
           <div>          
-          <h2>{exam.title}</h2>
-          <p>{exam.description}</p>
           <ul>
-            <li> <strong>Tiempo límite (mins) :</strong>  {exam.timeLimit} minutos</li>
-            <li>Nota mínima : {exam.minimumPassingScore} /20</li>
-            <li>Número de preguntas : {exam.numberOfQuestions}</li>
-            <li>Instrucciones : {exam.instructions}</li>
+            <li> <strong>Hora :</strong>  {reservacion.hora}</li>
+            <li>Lugar : {reservacion.lugar}</li>
+            <li>Fecha : {reservacion.fecha}</li>
+            <li>Disponibilidad : {reservacion.disponibilidad}</li>
           </ul>
           <br />
 							<div className="btn-group" role="group">								
-                <Link to={"/exams"} className="btn btn-primary">
+                <Link to={"/reservacion"} className="btn btn-primary">
                     <FaArrowLeft /> Volver
                 </Link>
 								<button type="button" className="btn btn-danger">
@@ -53,7 +51,7 @@ export const ExamCard = () => {
 
         ) : 
         ( 
-          <h1>No hay un examen activo</h1>
+          <h1>No hay una reservacion activa</h1>
         )
       }
       </div>

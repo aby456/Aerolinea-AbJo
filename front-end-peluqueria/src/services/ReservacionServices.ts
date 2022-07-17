@@ -1,15 +1,15 @@
 import Swal from "sweetalert2";
 import http from "../http-common";
-import IExamData from "../models/Exam";
+import IReservacionData from "../models/Reservacion";
 
-const create = async (data: IExamData) => {    
+const create = async (data: IReservacionData) => {    
   try {
-    const response = await http.post<IExamData>("/exams", data);
+    const response = await http.post<IReservacionData>("/reservacion", data);
     if(response.status === 201){
       Swal.fire({
         icon: 'success',
         title: 'Correcto',
-        text: 'El examen ha sido creado correctamente',
+        text: 'La reservacion ha sido creado correctamente',
         confirmButtonText: 'Aceptar'    
 
       });
@@ -27,17 +27,17 @@ const create = async (data: IExamData) => {
 };
 
 const retrieve = async (id: number) => {
-    return http.get<IExamData>(`/exams/${id}`);
+    return http.get<IReservacionData>(`/reservacion/${id}`);
 };
 
-const update = async (data: IExamData) => {
+const update = async (data: IReservacionData) => {
   try {    
-    const response = await http.put<IExamData>(`/exams/${data.id}`, data);
+    const response = await http.put<IReservacionData>(`/reservacion/${data.id}`, data);
     if(response.status === 200){
       Swal.fire({
         icon: 'success',
         title: 'Correcto',
-        text: 'El examen ha sido actualizado',
+        text: 'La reservacion ha sido actualizado',
         confirmButtonText: 'Aceptar'    
       });
     }
@@ -55,12 +55,12 @@ const update = async (data: IExamData) => {
 
 const remove = async (id: number) => {
     try {
-      const response = await  http.delete<string>(`/exams/${id}`);
+      const response = await  http.delete<string>(`/reservacion/${id}`);
       if(response.status === 200){
         Swal.fire({
           icon: 'success',
           title: 'Correcto',
-          text: 'El examen ha sido eliminado',
+          text: 'La reservacion ha sido eliminado',
           confirmButtonText: 'Aceptar'    
         });
       }
@@ -77,17 +77,17 @@ const remove = async (id: number) => {
 
 
 const list = (page: number, size: number, sort? : String) => {
-  const urlRequest : string = "/exams/" + page + "/" + size ;
+  const urlRequest : string = "/reservacion/" + page + "/" + size ;
   console.log(urlRequest);
-  return http.get<Array<IExamData>>(urlRequest);
+  return http.get<Array<IReservacionData>>(urlRequest);
 };
 
 const count = async () =>  {  
-  const response = await http.get<number>("/exams/count");
+  const response = await http.get<number>("/reservacion/count");
   return response.data;
 };
 
-const ExamService = {
+const ReservacionService = {
   create,
   retrieve,
   update,
@@ -96,4 +96,4 @@ const ExamService = {
   count
 
 };
-export default ExamService;
+export default ReservacionService;

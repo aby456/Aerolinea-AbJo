@@ -30,7 +30,7 @@ public class Reservacion {
     @Column(name = "FECHA")
     private String fecha;
     @Column(name = "DISPONIBILIDAD")
-    private Boolean disponibilidad;
+    private int disponibilidad;
 
 
     

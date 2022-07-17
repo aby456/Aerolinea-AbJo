@@ -1,15 +1,15 @@
 import { FaPen, FaEye, FaTrash, FaPlus } from "react-icons/fa";
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import IExamModel from '../../models/Exam';
-import ExamService from '../../services/ExamServices';
+import IReservacionModel from '../../models/Reservacion';
+import ReservacionService from '../../services/ReservacionServices';
 import Swal from "sweetalert2";
 import ReactPaginate from "react-paginate";
 
-export const ExamList = () => {
+export const ReservacionList = () => {
 
     //Hook: Define un atributo y la función que lo va a actualizar
-    const [exams, setExams] = useState<Array<IExamModel>>([]);
+    const [reservacion, setReservacion] = useState<Array<IReservacionModel>>([]);
     const [itemsCount, setItemsCount] = useState<number>(0);
     const [pageCount, setPageCount] = useState(0);
     const [itemsPerPage, setItemsPerPage] = useState(5);
@@ -17,19 +17,19 @@ export const ExamList = () => {
     //Hook para llamar a la Web API
     useEffect(() => {
       getItems();  
-      listExams(0, itemsPerPage);           
+      listReservacion(0, itemsPerPage);           
       }, []);
 
     const handlePageClick = (event: any) => {        
       const numberPage = event.selected;                   
-      listExams(numberPage, itemsPerPage);
+      listReservacion(numberPage, itemsPerPage);
     };
 
     //Función que llama al Service para listar los datos desde la Web API
-    const listExams = (page: number, size: number) => {
-       ExamService.list(page, size)
+    const listReservacion = (page: number, size: number) => {
+        ReservacionService.list(page, size)
          .then((response: any) => {
-           setExams(response.data); //Víncula el resultado del servicio con la función del Hook useState
+           setReservacion(response.data); //Víncula el resultado del servicio con la función del Hook useState
            console.log(response.data);
          })
          .catch((e: Error) => {
@@ -38,7 +38,7 @@ export const ExamList = () => {
     };
 
     const getItems = () => {
-      ExamService.count().then((response: any) =>{
+      ReservacionService.count().then((response: any) =>{
         var itemsCount = response;
         setItemsCount(itemsCount);
         setPageCount(Math.ceil(itemsCount/ itemsPerPage));           
@@ -49,17 +49,17 @@ export const ExamList = () => {
       });
     }
 
-    const removeExam = (id: number) => {
+    const removeReservacion = (id: number) => {
         Swal.fire({
-            title: '¿Desea eliminar el examen?',
+            title: '¿Desea eliminar la reservacion?',
             showDenyButton: true,
             confirmButtonText: 'Si',
             denyButtonText: 'No',
           }).then((result) => {            
             if (result.isConfirmed) {
-                ExamService.remove(id)
+                ReservacionService.remove(id)
                 .then((response: any) => {
-                  listExams(0,itemsPerPage);
+                  listReservacion(0,itemsPerPage);
                   console.log(response.data);
                 })
                 .catch((e: Error) => {
@@ -72,42 +72,42 @@ export const ExamList = () => {
    
     return ( 
         <div className='list row'>
-            <h1>Hay {itemsCount} exámenes</h1>
+            <h1>Hay {itemsCount} Reservaciones</h1>
             <div className='col-md-12'>
                 <table className='table'>
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Título</th>
-                            <th>Descripción</th>
-                            <th>Tiempo límite</th>
-                            <th># Preguntas</th>
+                            <th>hora</th>
+                            <th>lugar</th>
+                            <th>fecha</th>
+                            <th>disponibilidad</th>
                             <th>
-                              <Link to={"/exams/create"} className="btn btn-success">
+                              <Link to={"/reservacion/create"} className="btn btn-success">
                                   <FaPlus /> Agregar
                               </Link>
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        {exams && exams.map((Exam, index) => (                          
+                        {reservacion && reservacion.map((Reservacion, index) => (                          
                             <tr key={index}>
                                 <td>{++index}</td>
-                                <td>{Exam.title}</td>
-                                <td>{Exam.description}</td>
-                                <td>{Exam.timeLimit} mins</td>
-                                <td>{Exam.numberOfQuestions}</td>
+                                <td>{Reservacion.hora}</td>
+                                <td>{Reservacion.lugar}</td>
+                                <td>{Reservacion.fecha}</td>
+                                <td>{Reservacion.disponibilidad}</td>
                                 <td>
                         
                                 <div className="btn-group" role="group">
-                                <Link to={"/exams/retrieve/" + Exam.id} className="btn btn-warning">
+                                <Link to={"/reservacion/retrieve/" + Reservacion.id} className="btn btn-warning">
                                     <FaEye /> Ver
                                   </Link>                                  
-                                  <Link to={"/exams/update/" + Exam.id} className="btn btn-primary">
+                                  <Link to={"/reservacion/update/" + Reservacion.id} className="btn btn-primary">
                                       <FaPen /> Editar
                                   </Link>
 
-                                  <button className="btn btn-danger" onClick={() => removeExam(Exam.id!)}>
+                                  <button className="btn btn-danger" onClick={() => removeReservacion(Reservacion.id!)}>
                                     <FaTrash /> Eliminar
                                   </button>
 
@@ -123,11 +123,11 @@ export const ExamList = () => {
                 <ReactPaginate
                   className="pagination"
                   breakLabel="..."
-                  nextLabel="siguiente >"
+                  nextLabel=">"
                   onPageChange={handlePageClick}
                   pageRangeDisplayed={5}
                   pageCount={pageCount}
-                  previousLabel="< anterior"/>
+                  previousLabel="<"/>
 
             </div>            
         </div>

@@ -1,12 +1,15 @@
 import { Routes, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Home } from "./components/Home";
-import { ExamList } from "./components/exam/ExamList";
-import { ExamForm } from "./components/exam/ExamForm";
-import { ExamCard } from "./components/exam/ExamCard";
+//import { ExamList } from "./components/exam/ExamList";
+//import { ExamForm } from "./components/exam/ExamForm";
+//import { ExamCard } from "./components/exam/ExamCard";
+import { ReservacionList } from "./components/reservacion/ReservacionList";
+import { ReservacionForm  } from "./components/reservacion/ReservacionForm";
+import { ReservacionCard } from "./components/reservacion/ReservacionCard";
 
-const title = "Online Test";
-const description = "Aplicación web para la automatización de cuestionarios en línea";
+const title = "Peluqueria AbJo";
+const description = "Aplicación web para la reservacion de una peluqueria";
 
 const App: React.FC = () => {
   return (
@@ -17,8 +20,8 @@ const App: React.FC = () => {
         </Link>
         <div className="navbar-nav mr-auto">
           <li className="nav-item">
-            <Link to={"/exams"} className="nav-link">
-              Exámenes
+            <Link to={"/reservacion"} className="nav-link">
+              Reservacion
             </Link>
           </li>          
         </div>
@@ -26,10 +29,10 @@ const App: React.FC = () => {
       <div className="container mt-3">
         <Routes>
           <Route path="/" element={<Home title={title} description={description} />} />          
-          <Route path="/exams" element={<ExamList />} />          
-          <Route path="/exams/create" element={<ExamForm />} />    
-          <Route path="/exams/retrieve/:id" element={<ExamCard/>} />      
-          <Route path="/exams/update/:id" element={<ExamForm />} />    
+          <Route path="/reservacion" element={<ReservacionList />} />          
+          <Route path="/reservacion/create" element={<ReservacionForm />} />    
+          <Route path="/reservacion/retrieve/:id" element={<ReservacionCard/>} />      
+          <Route path="/reservacion/update/:id" element={<ReservacionForm />} />    
         </Routes>
       </div>
     </div>
