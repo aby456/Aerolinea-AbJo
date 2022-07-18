@@ -3,15 +3,17 @@ package com.peluqueria.peluqueria.services.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.peluqueria.peluqueria.dto.Metodo_PagoReservacionDTO;
 import com.peluqueria.peluqueria.dto.Metodo_pagoDTO;
 import com.peluqueria.peluqueria.dto.NewMetodo_pagoDTO;
+import com.peluqueria.peluqueria.exception.NoContentException;
 import com.peluqueria.peluqueria.exception.ResourceNotFoundException;
 import com.peluqueria.peluqueria.models.Metodo_pago;
+import com.peluqueria.peluqueria.models.Reservacion;
 import com.peluqueria.peluqueria.repositories.Metodo_pagoRepository;
+import com.peluqueria.peluqueria.repositories.ReservacionRepository;
 import com.peluqueria.peluqueria.services.Metodo_pagoService;
-
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,52 +21,71 @@ import org.springframework.transaction.annotation.Transactional;
 public class Metodo_pagoServiceImpl implements Metodo_pagoService {
 
     final ModelMapper modelMapper;
-    final Metodo_pagoRepository metodo_pagoRepository;
+    final Metodo_pagoRepository repository;
+    final ReservacionRepository reservacionRepository;
 
-    @Autowired
-    public Metodo_pagoServiceImpl(@Autowired Metodo_pagoRepository repository, ModelMapper mapper){
-        this.metodo_pagoRepository = repository;
-        this.modelMapper = mapper;
+    public Metodo_pagoServiceImpl(Metodo_pagoRepository r, ReservacionRepository er, ModelMapper m)
+    {
+        this.modelMapper = m;
+        this.repository = r;
+        this.reservacionRepository = er;
+    }
+
+
+    @Override
+    @Transactional
+    public Metodo_pagoDTO create(Long idReservacion, NewMetodo_pagoDTO metodo_pagoDTO) {
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
+            .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
+        Metodo_pago metodo = modelMapper.map(metodo_pagoDTO, Metodo_pago.class);    
+        metodo.setReservacion(reservacion);
+        repository.save(metodo);
+        return modelMapper.map(metodo, Metodo_pagoDTO.class); 
+    }
+
+    @Override
+    @Transactional(readOnly=true)
+    public Metodo_PagoReservacionDTO retrieve(Long idReservacion, Long id) {
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
+            .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
+        Metodo_pago metodo = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
+        metodo.setReservacion(reservacion);
+        return modelMapper.map(metodo, Metodo_PagoReservacionDTO.class);
     }
 
     @Override
     @Transactional
-    public Metodo_pagoDTO create(NewMetodo_pagoDTO metodo_pagoDTO) {
-        Metodo_pago metodo_pago = modelMapper.map(metodo_pagoDTO, Metodo_pago.class);
-        metodo_pagoRepository.save(metodo_pago);
-        Metodo_pagoDTO metodo_pagoDTOCreated = modelMapper.map(metodo_pago, Metodo_pagoDTO.class);
-        return metodo_pagoDTOCreated;
+    public Metodo_PagoReservacionDTO update(Metodo_pagoDTO metodoDTO, Long idReservacion, Long id) {
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
+        .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
+        Metodo_pago metodo = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
+        metodo = modelMapper.map(metodoDTO, Metodo_pago.class);
+        metodo.setReservacion(reservacion);
+        repository.save(metodo);       
+        return modelMapper.map(metodo, Metodo_PagoReservacionDTO.class);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Metodo_pagoDTO retrieve(Long id)  {
-        Metodo_pago metodo_pago = metodo_pagoRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
-        return modelMapper.map(metodo_pago, Metodo_pagoDTO.class);
-    }
 
     @Override
     @Transactional
-    public Metodo_pagoDTO update(Metodo_pagoDTO metodo_pagoDTO, Long id)  {
-        Metodo_pago metodo_pago = metodo_pagoRepository.findById(metodo_pagoDTO.getId()).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
-        metodo_pago.setId(id);
-        metodo_pago = modelMapper.map(metodo_pagoDTO, Metodo_pago.class);
-        metodo_pagoRepository.save(metodo_pago);
-        return modelMapper.map(metodo_pago, Metodo_pagoDTO.class);
+    public void delete(Long idReservacion, Long id) {
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
+        .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
+        Metodo_pago metodo = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
+        metodo.setReservacion(reservacion);
+        repository.deleteById(reservacion.getId());  
     }
 
     @Override
-    @Transactional
-    public void delete(Long id)  {
-        Metodo_pago metodo_pago = metodo_pagoRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
-        metodo_pagoRepository.deleteById(metodo_pago.getId());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Metodo_pagoDTO> list() {
-        List<Metodo_pago> metodo_pagos = metodo_pagoRepository.findAll();
-        return metodo_pagos.stream().map(metodo_pago-> modelMapper.map(metodo_pago, Metodo_pagoDTO.class)).collect(Collectors.toList());
+    @Transactional(readOnly=true)
+    public List<Metodo_pagoDTO> list(Long idReservacion) {
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
+            .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
+        List<Metodo_pago> metodos = repository.findByReservacion(reservacion);
+        if(metodos.isEmpty()) throw new NoContentException("Servicios is empty");
+        //Lambda ->
+        return metodos.stream().map(q -> modelMapper.map(q, Metodo_pagoDTO.class) )
+            .collect(Collectors.toList());
     }
     
 }

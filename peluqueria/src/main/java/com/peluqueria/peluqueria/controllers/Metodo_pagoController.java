@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import com.peluqueria.peluqueria.dto.Metodo_PagoReservacionDTO;
 import com.peluqueria.peluqueria.dto.Metodo_pagoDTO;
 import com.peluqueria.peluqueria.dto.NewMetodo_pagoDTO;
 import com.peluqueria.peluqueria.services.Metodo_pagoService;
@@ -21,53 +22,51 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/metodo_pago")
+@RequestMapping("/reservacion")
 public class Metodo_pagoController {
     
-    private final Metodo_pagoService metodo_pago;
+    private final Metodo_pagoService srvo;
 
     @Autowired
-    public Metodo_pagoController(Metodo_pagoService mtp){
-        this.metodo_pago = mtp;
+    public Metodo_pagoController(Metodo_pagoService srv){
+        this.srvo = srv;
     }
 
-    @PostMapping()
-    public ResponseEntity<Metodo_pagoDTO> create(@Valid @RequestBody NewMetodo_pagoDTO metodo_pagoDTO){
-        
-        Metodo_pagoDTO result = metodo_pago.create(metodo_pagoDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
-        
+    /* ================ CREATE ================ */
+    @PostMapping("/{id}/metodo")
+    public ResponseEntity<Metodo_pagoDTO> create(@PathVariable("id") Long id, @Valid @RequestBody NewMetodo_pagoDTO clienteDTO){
+        Metodo_pagoDTO servicioDTOs = srvo.create(id, clienteDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(servicioDTOs);        
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Metodo_pagoDTO> retrieve(@PathVariable("id") Long id){
-        
-        Metodo_pagoDTO result = metodo_pago.retrieve(id);
+       /* ================ RETRIEVE ================ */
+       @GetMapping("/{idReservacion}/metodo/{id}")
+       public ResponseEntity<Metodo_PagoReservacionDTO> retrive(@PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
+        Metodo_PagoReservacionDTO result = srvo.retrieve(idReservacion, id);
+           return ResponseEntity.ok().body(result);        
+       }
+   
+
+  /* ================ UPDATE ================ */
+    @PutMapping("/{idReservacion}/metodo/{id}")
+    public ResponseEntity<Metodo_PagoReservacionDTO> update(@RequestBody Metodo_pagoDTO servicioDTO, @PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
+        Metodo_PagoReservacionDTO result = srvo.update(servicioDTO, idReservacion, id);
         return ResponseEntity.ok().body(result);
-        
+    }
+    
+          /* ================ DELETE ================ */
+    @DeleteMapping("/{idReservacion}/metodo/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
+        srvo.delete(idReservacion, id);
+        return ResponseEntity.noContent().build();
     }
 
-    @GetMapping()
-    public ResponseEntity<List<Metodo_pagoDTO>> list(){
-        
-        List<Metodo_pagoDTO> result = metodo_pago.list();
-        return ResponseEntity.ok().body(result);
-        
-    }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Metodo_pagoDTO> update(@RequestBody Metodo_pagoDTO metodo_pagoDTO, @PathVariable("id") Long id){
-        
-        Metodo_pagoDTO result = metodo_pago.update(metodo_pagoDTO,id);
-        return ResponseEntity.ok().body(result);
-        
-    }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable("id") Long id){
-        
-        metodo_pago.delete(id);
-        return ResponseEntity.ok().body("metodo_pago Delete");
-        
+       /* ================ LIST ================ */
+    @GetMapping("/{id}/metodo")
+    public ResponseEntity<List<Metodo_pagoDTO>> list(@PathVariable("id") Long id){
+        List<Metodo_pagoDTO> servicios = srvo.list(id);
+        return ResponseEntity.ok().body(servicios);        
     }
 }

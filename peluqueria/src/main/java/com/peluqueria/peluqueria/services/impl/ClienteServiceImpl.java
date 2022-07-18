@@ -2,13 +2,16 @@ package com.peluqueria.peluqueria.services.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 import com.peluqueria.peluqueria.dto.ClienteDTO;
+import com.peluqueria.peluqueria.dto.ClienteReservacionDTO;
 import com.peluqueria.peluqueria.dto.NewClienteDTO;
+import com.peluqueria.peluqueria.exception.NoContentException;
 import com.peluqueria.peluqueria.exception.ResourceNotFoundException;
 import com.peluqueria.peluqueria.models.Cliente;
+import com.peluqueria.peluqueria.models.Reservacion;
 import com.peluqueria.peluqueria.repositories.ClienteRepository;
+import com.peluqueria.peluqueria.repositories.ReservacionRepository;
 import com.peluqueria.peluqueria.services.ClienteService;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,52 +19,81 @@ import org.springframework.transaction.annotation.Transactional;
 public class ClienteServiceImpl implements ClienteService {
 
     final ModelMapper modelMapper;
-    final ClienteRepository clienteRepository;
+    final ClienteRepository repository;
+    final ReservacionRepository reservacionRepository;
 
-    public ClienteServiceImpl(@Autowired ClienteRepository repository, ModelMapper mapper){
-        this.clienteRepository = repository;
-        this.modelMapper = mapper;
+    public ClienteServiceImpl(ClienteRepository r, ReservacionRepository er, ModelMapper m)
+    {
+        this.modelMapper = m;
+        this.repository = r;
+        this.reservacionRepository = er;
+    }
+
+
+    @Override
+    @Transactional
+    public ClienteDTO create(Long idReservacion, NewClienteDTO clienteDTO) {
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
+            .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
+        Cliente cliente = modelMapper.map(clienteDTO, Cliente.class);    
+        cliente.setReservacion(reservacion);
+        repository.save(cliente);
+        return modelMapper.map(cliente, ClienteDTO.class); 
+    }
+
+    @Override
+    @Transactional(readOnly=true)
+    public ClienteReservacionDTO retrieve(Long idReservacion, Long id) {
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
+            .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
+        Cliente cliente = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
+        cliente.setReservacion(reservacion);
+        return modelMapper.map(cliente, ClienteReservacionDTO.class);
     }
 
     @Override
     @Transactional
-    public ClienteDTO create(NewClienteDTO clienteDTO) {
-        Cliente cliente = modelMapper.map(clienteDTO, Cliente.class);
-        clienteRepository.save(cliente);
-        ClienteDTO clienteDTOCreated = modelMapper.map(cliente, ClienteDTO.class);
-        return clienteDTOCreated;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public ClienteDTO retrieve(Long id)  {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
-        return modelMapper.map(cliente, ClienteDTO.class);
-    }
-
-    @Override
-    @Transactional
-    public ClienteDTO update(ClienteDTO clienteDTO, Long id)  {
-        Cliente cliente = clienteRepository.findById(clienteDTO.getId()).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
-        cliente.setId(id);
+    public ClienteReservacionDTO update(ClienteDTO clienteDTO, Long idReservacion, Long id) {
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
+        .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
+        Cliente cliente = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
         cliente = modelMapper.map(clienteDTO, Cliente.class);
-        clienteRepository.save(cliente);
-        return modelMapper.map(cliente, ClienteDTO.class);
+        cliente.setReservacion(reservacion);
+        repository.save(cliente);       
+        return modelMapper.map(cliente, ClienteReservacionDTO.class);
     }
+
 
     @Override
     @Transactional
-    public void delete(Long id)  {
-        Cliente cliente = clienteRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Categoria not found"));
-        clienteRepository.deleteById(cliente.getId());
-        
+    public void delete(Long idReservacion, Long id) {
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
+        .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
+        Cliente cliente = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
+        cliente.setReservacion(reservacion);
+        repository.deleteById(reservacion.getId());  
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public List<ClienteDTO> list() {
-        List<Cliente> clientes = clienteRepository.findAll();
-        return clientes.stream().map(cliente-> modelMapper.map(cliente, ClienteDTO.class)).collect(Collectors.toList());
+    @Transactional(readOnly=true)
+    public List<ClienteDTO> list(Long idReservacion) {
+        Reservacion reservacion = reservacionRepository.findById(idReservacion)
+            .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
+        List<Cliente> clientes = repository.findByReservacion(reservacion);
+        if(clientes.isEmpty()) throw new NoContentException("Servicios is empty");
+        //Lambda ->
+        return clientes.stream().map(q -> modelMapper.map(q, ClienteDTO.class) )
+            .collect(Collectors.toList());
     }
-    
+
+
+    @Override
+    public long count() {        
+        return reservacionRepository.count();
+    }
+
+
+
+
+
 }

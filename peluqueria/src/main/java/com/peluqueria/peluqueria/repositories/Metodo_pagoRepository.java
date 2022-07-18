@@ -1,6 +1,7 @@
 package com.peluqueria.peluqueria.repositories;
 
 import com.peluqueria.peluqueria.models.Metodo_pago;
+import com.peluqueria.peluqueria.models.Reservacion;
 
 import java.util.List;
 
@@ -9,5 +10,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface Metodo_pagoRepository extends JpaRepository<Metodo_pago,Long>{
-    public List<Metodo_pago> findByMetodo(String criteria);
+    public List<Metodo_pago>  findByReservacion(Reservacion reservacion);
 }

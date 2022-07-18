@@ -17,7 +17,6 @@ public class NewClienteDTO {
     private String direccion;
     @NotNull(message = "Email width can't be null.")   
     private String email;
-    @Min(message = "Password limit can't be lower 6 minutes", value = 6)
-    @Max(message = "Password limit can't be more 18 minutes",value = 18)
+    @NotNull(message = "password width can't be null.")   
     private String password;
 }
