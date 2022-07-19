@@ -5,6 +5,10 @@ import { Home } from "./components/Home";
 import { ReservacionList } from "./components/reservacion/ReservacionList";
 import { ReservacionForm  } from "./components/reservacion/ReservacionForm";
 import { ReservacionCard } from "./components/reservacion/ReservacionCard";
+import { ClienteCard } from "./components/cliente/ClienteCard";
+import { ClienteForm } from "./components/cliente/ClienteForm";
+import { ClienteList } from "./components/cliente/ClienteList";
+
 
 const title = "Peluqueria AbJo";
 const description = "Aplicación web para la reservacion en una peluqueria";
@@ -21,7 +25,7 @@ const App: React.FC = () => {
           <nav className="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li className="breadcrumb-item active" aria-current="page" ><a href="/reservacion">Reservacion</a></li>
-              <li className="breadcrumb-item"><a href="/cliente">Cliente</a></li>
+              <li className="breadcrumb-item"><a href="cliente">Cliente</a></li>
               <li className="breadcrumb-item"><a href="/servicio">Servicio</a></li>
             </ol>
           </nav>          
@@ -36,6 +40,18 @@ const App: React.FC = () => {
           <Route path="/reservacion/update/:id" element={<ReservacionForm />} />    
         </Routes>
       </div>
+
+      <div className="container mt-3">
+        <Routes>
+          <Route path="/" element={<Home title={title} description={description} />} />          
+          <Route path="/cliente" element={<ClienteList />} />          
+          <Route path="/cliente/create" element={<ClienteForm />} />    
+          <Route path="/cliente/retrieve/:id" element={<ClienteCard/>} />      
+          <Route path="/cliente/update/:id" element={<ClienteForm />} />    
+        </Routes>
+      </div>
+
+      
     </div>
   );
 }

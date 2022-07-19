@@ -3,6 +3,6 @@ export default interface IClienteModel {
     nombre? : string | null,
     telefono? : string | null,
     direccion? : string | null,
-    email : string | null,   
-    password : string | null 
+    email : string ,   
+    password : string 
 }

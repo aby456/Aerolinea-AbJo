@@ -27,10 +27,6 @@ export const ReservacionForm = () => {
         setReservacion({ ...reservacion, [name]: value });
     };
 
-		/*const handleTextAreaChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-			const { name, value } = event.target;
-			setReservacion({ ...reservacion, [name]: value });
-	};*/
 
     const saveReservacion = () => {        
       if(reservacion.id !== null)
