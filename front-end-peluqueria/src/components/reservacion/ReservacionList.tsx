@@ -1,135 +1,144 @@
-import { FaPen, FaEye, FaTrash, FaPlus } from "react-icons/fa";
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom';
-import IReservacionModel from '../../models/Reservacion';
-import ReservacionService from '../../services/ReservacionServices';
+import { useReservation } from "../../hooks/useReservation";
+import { Link, useNavigate } from "react-router-dom";
+import { FaEye, FaPen, FaTrash } from "react-icons/fa";
+import { memo, useContext, useState } from "react";
+import Pagination from "../Pagination";
+import ItemContext from "../../contexts/PaginationContext";
+import { Loading } from "../Loading";
+import IReservation from "../../models/Reservacion";
 import Swal from "sweetalert2";
-import ReactPaginate from "react-paginate";
+import ReservacionService from "../../services/ClienteService";
 
-export const ReservacionList = () => {
-
-    //Hook: Define un atributo y la función que lo va a actualizar
-    const [reservacion, setReservacion] = useState<Array<IReservacionModel>>([]);
-    const [itemsCount, setItemsCount] = useState<number>(0);
-    const [pageCount, setPageCount] = useState(0);
-    const [itemsPerPage, setItemsPerPage] = useState(5);
+export const ReservacionList = memo(() => {
+  const { page }: any = useContext(ItemContext);
+  const { item }: any = useContext(ItemContext);
+  const { reservations, loading } = useReservation(page, item);
+  const [reservationsList, setReservationsList] = useState<IReservation[]>([]);
+  const [valorEncontrado, setValorEncontrado] = useState<boolean>(true);
+  const navigate = useNavigate();
+  let reservacionesFiltradas: IReservation[] = [];
     
-    //Hook para llamar a la Web API
-    useEffect(() => {
-      getItems();  
-      listReservacion(0, itemsPerPage);           
-      }, []);
-
-    const handlePageClick = (event: any) => {        
-      const numberPage = event.selected;                   
-      listReservacion(numberPage, itemsPerPage);
-    };
-
-    //Función que llama al Service para listar los datos desde la Web API
-    const listReservacion = (page: number, size: number) => {
-        ReservacionService.list(page, size)
-         .then((response: any) => {
-           setReservacion(response.data); //Víncula el resultado del servicio con la función del Hook useState
-           console.log(response.data);
-         })
-         .catch((e: Error) => {
-           console.log(e);
-         });
-    };
-
-    const getItems = () => {
-      ReservacionService.count().then((response: any) =>{
-        var itemsCount = response;
-        setItemsCount(itemsCount);
-        setPageCount(Math.ceil(itemsCount/ itemsPerPage));           
-        setItemsPerPage(5)
-        console.log(response);
-      }).catch((e : Error)=> {
-        console.log(e);
-      });
+  const listaCabecera = [
+    "id",
+    "Hora",
+    "Lugar",
+    "Fecha",
+    "Disponibilidad",
+    "Acciones",
+  ];
+  const handleChangeBuscar = (event: any) => {
+    //Filtrar por el valor del input
+    const buscar = event.target.value;
+    if(buscar === ""){
+        setReservationsList(reservations);
+        setValorEncontrado(true);
+    }   
+    else{
+        reservacionesFiltradas = reservations.filter((reservacion: IReservation) => {
+            return reservacion.hora?.includes(buscar);
+          });
+        setReservationsList(reservacionesFiltradas);
+        if(reservacionesFiltradas.length === 0){
+            setValorEncontrado(false);
+        }else{
+            setValorEncontrado(true);
+        }
     }
+  };
 
-    const removeReservacion = (id: number) => {
-        Swal.fire({
-            title: '¿Desea eliminar la reservacion?',
-            showDenyButton: true,
-            confirmButtonText: 'Si',
-            denyButtonText: 'No',
-          }).then((result) => {            
-            if (result.isConfirmed) {
-                ReservacionService.remove(id)
-                .then((response: any) => {
-                  listReservacion(0,itemsPerPage);
-                  console.log(response.data);
-                })
-                .catch((e: Error) => {
-                  console.log(e);
-                });      
+  const removeReservacion = (id: number) => {
+    Swal.fire({
+        title: '¿Desea eliminar la reservacion?',
+        showDenyButton: true,
+        confirmButtonText: 'Si',
+        denyButtonText: 'No',
+      }).then((result) => {            
+        if (result.isConfirmed) {
+            ReservacionService.remove(id)
+            .then((response: any) => {
+                navigate("/");
+            })
+            .catch((e: Error) => {
+              console.log(e);
+            });      
 
+        }
+      });        
+ };
+
+  if (loading) {
+    return <Loading />;
+  }
+  return (
+    <div>
+      <div className="form-group m-3">
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Filtrar..."
+          onChange={handleChangeBuscar}
+        />
+      </div>
+
+      <div className="list row">
+        <div className="col-md-12">
+          {
+            valorEncontrado ? (
+                <table className="table">
+            <thead>
+              <tr>
+                {listaCabecera.map((cabecera, index) => (
+                  <th key={index}>{cabecera}</th>
+                ))}
+              </tr>
+            </thead>
+            {
+              <tbody>
+                {(reservationsList.length!==0?reservationsList:reservations).map((reservacion: any, index: any) => (
+                  <tr key={index}>
+                    <td>{reservacion.id}</td>
+                    <td>{reservacion.hora}</td>
+                    <td>{reservacion.lugar}</td>
+                    <td>{reservacion.fecha}</td>
+                    <td>{reservacion.disponibilidad}</td>
+                    <td>
+                      <div className="btn-group" role="group">
+                        <Link
+                          to={"/reservacion/retrieve/" + reservacion.id}
+                          className="btn btn-warning"
+                        >
+                          <FaEye /> Ver
+                        </Link>
+                        <Link
+                          to={"/reservacion/update/" + reservacion.id}
+                          className="btn btn-primary"
+                        >
+                          <FaPen /> Editar
+                        </Link>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => removeReservacion(reservacion.id)}
+                        >
+                          <FaTrash /> Eliminar
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
             }
-          });        
-     };
-   
-    return ( 
-        <div className='list row'>
-            <h1>Hay {itemsCount} Reservaciones</h1>
-            <div className='col-md-12'>
-                <table className='table'>
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>hora</th>
-                            <th>lugar</th>
-                            <th>fecha</th>
-                            <th>disponibilidad</th>
-                            <th>
-                              <Link to={"/reservacion/create"} className="btn btn-success">
-                                  <FaPlus /> Agregar
-                              </Link>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {reservacion && reservacion.map((Reservacion, index) => (                          
-                            <tr key={index}>
-                                <td>{++index}</td>
-                                <td>{Reservacion.hora}</td>
-                                <td>{Reservacion.lugar}</td>
-                                <td>{Reservacion.fecha}</td>
-                                <td>{Reservacion.disponibilidad}</td>
-                                <td>
-                        
-                                <div className="btn-group" role="group">
-                                <Link to={"/reservacion/retrieve/" + Reservacion.id} className="btn btn-warning">
-                                    <FaEye /> Ver
-                                  </Link>                                  
-                                  <Link to={"/reservacion/update/" + Reservacion.id} className="btn btn-primary">
-                                      <FaPen /> Editar
-                                  </Link>
-
-                                  <button className="btn btn-danger" onClick={() => removeReservacion(Reservacion.id!)}>
-                                    <FaTrash /> Eliminar
-                                  </button>
-
-                                  
-                                </div>
-                                    
-                                </td>
-                            </tr>                        
-                        ))}
-                    </tbody>
-                </table>
-
-                <ReactPaginate
-                  className="pagination"
-                  breakLabel="..."
-                  nextLabel=">"
-                  onPageChange={handlePageClick}
-                  pageRangeDisplayed={5}
-                  pageCount={pageCount}
-                  previousLabel="<"/>
-
-            </div>            
+          </table>
+            ) : (
+                <div className="alert alert-danger" role="alert">
+                    No se encontraron resultados
+                </div>
+            )
+          }
+          <div>
+            <Pagination />
+          </div>
         </div>
-     );
-}
+      </div>
+    </div>
+  );
+});

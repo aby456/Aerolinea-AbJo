@@ -1,6 +1,5 @@
 import Swal from "sweetalert2";
 import http from "../http-common";
-import IReservation from "../models/Reservacion";
 import IReservacionData from "../models/Reservacion";
 
 const create = async (data: IReservacionData) => {    

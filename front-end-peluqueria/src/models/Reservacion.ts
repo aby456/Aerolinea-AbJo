@@ -1,4 +1,4 @@
-export default interface IExamModel {
+export default interface IReservation {
     id?: number | null,
     hora? : string | null,
     lugar? : string | null,

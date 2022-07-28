@@ -19,7 +19,7 @@ export const ReservacionCard = () => {
   const getReservacion = (id: any) => {
     ReservacionService.retrieve(id)
       .then((response: any) => {
-        setReservacion(response.data); //Víncula el resultado del servicio con la función del Hook useState
+        setReservacion(response.data); //Víncula el resultado del servicio con la función del Hook 
         console.log(response.data);
       })
       .catch((e: Error) => {
@@ -33,7 +33,7 @@ export const ReservacionCard = () => {
         reservacion ? (
           <div>          
           <ul>
-            <li> <strong>Hora :</strong>  {reservacion.hora}</li>
+            <li> <strong>Hora :</strong>{reservacion.hora}</li>
             <li>Lugar : {reservacion.lugar}</li>
             <li>Fecha : {reservacion.fecha}</li>
             <li>Disponibilidad : {reservacion.disponibilidad}</li>
