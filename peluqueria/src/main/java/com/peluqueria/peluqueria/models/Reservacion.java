@@ -16,20 +16,20 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="TBL_RESERVACION")
+@Table(name="TBL_RESERVACIONES")
 @Getter
 @Setter
 public class Reservacion {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name = "HORA")
+    @Column(name = "HORAS")
     private String hora;
-    @Column(name = "LUGAR")
+    @Column(name = "LUGARES")
     private String lugar;
-    @Column(name = "FECHA")
+    @Column(name = "FECHAS")
     private String fecha;
-    @Column(name = "DISPONIBILIDAD")
+    @Column(name = "DISPONIBILIDADES")
     private int disponibilidad;
 
 
@@ -67,6 +67,8 @@ public class Reservacion {
 
     @OneToMany(mappedBy = "reservacion")
     private List<Cliente> cliente;
+
+    //@OneToMany(mappeBy="reservacion", cascade=CascadeType);
 
     
 

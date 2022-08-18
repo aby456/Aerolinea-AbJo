@@ -15,18 +15,18 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name="TBL_SERVICIO")
+@Table(name="TBL_SERVICIOS")
 @Getter
 @Setter
 public class Servicio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "NOMBRE_SERVICIO")
+    @Column(name = "NOMBRE_SERVICIOS")
     private String nombreServicio;
-    @Column(name = "PRECIO_SERVICIO")
+    @Column(name = "PRECIO_SERVICIOS")
     private double precioServicio;
-    @Column(name = "TIEMPO_ESTIMADO_SERVICIO")
+    @Column(name = "TIEMPO_ESTIMADO_SERVICIOS")
     private double tiempoEstimadoServicio;
 
 
