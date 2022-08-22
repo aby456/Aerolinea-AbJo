@@ -2,6 +2,7 @@ package com.peluqueria.peluqueria.models;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,11 +34,6 @@ public class Reservacion {
     private int disponibilidad;
 
 
-    
-
-    // @ManyToOne
-    // @JoinColumn(name="METODO_PAGO_ID", nullable=false)
-    // private Metodo_pago metodopago; 
 
     @Column(name = "CREATED_DATE")    
     private Calendar createdDate;
@@ -62,15 +58,11 @@ public class Reservacion {
     }
 
     
-    @OneToMany(mappedBy = "reservacion")
+    @OneToMany(mappedBy = "reservacion",  cascade=CascadeType.REMOVE)
     private List<Servicio> servicio;  
 
-    @OneToMany(mappedBy = "reservacion")
+    @OneToMany(mappedBy = "reservacion", cascade=CascadeType.REMOVE)
     private List<Cliente> cliente;
-
-    //@OneToMany(mappeBy="reservacion", cascade=CascadeType);
-
-    
 
 
 }

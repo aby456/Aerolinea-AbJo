@@ -38,6 +38,12 @@ public class Cliente {
     private String password;
 
 
+    @ManyToOne
+    @JoinColumn(name="RESERVACION_ID", nullable=false)
+    private Reservacion reservacion;
+
+    
+
     @Column(name = "CREATED_DATE")    
     private Calendar createdDate;
     @Column(name = "CREATED_BY")    
@@ -59,11 +65,4 @@ public class Cliente {
         updatedDate = Calendar.getInstance();
         updatedBy = "user2";
     }
-
-
-
-
-    @ManyToOne
-    @JoinColumn(name="RESERVACION_ID", nullable=false)
-    private Reservacion reservacion;
 }
