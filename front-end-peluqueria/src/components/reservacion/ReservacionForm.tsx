@@ -12,10 +12,10 @@ export const ReservacionForm = () => {
     //Model vacío
     const initialReservacionModel : IReservacionModel = {
         id: null,
-        hora: "",
+        horario: "",
         lugar: "",
         fecha: "",
-        disponibilidad: 2
+        cantidadPersona: 2
     };
 
     //Hooks para gestionar el modelo
@@ -74,16 +74,16 @@ export const ReservacionForm = () => {
 		return ( //JSX
 			<div className="submit-form">				
 					<div>
-						{ reservacion.id !== null ? (<h1>Actualizado reservacion {reservacion.hora}</h1>) : (<h1>Registro de una reservacion</h1>) }            
+						{ reservacion.id !== null ? (<h1>Actualizado reservacion {reservacion.horario}</h1>) : (<h1>Registro de una reservacion</h1>) }            
 						<div className="form-group">
-						<label htmlFor="hora">Hora (Minutos)</label>
+						<label htmlFor="horario">Horario</label>
             <input
               type="text"
-							placeholder="Ingrese la hora del la reservacion"
+							placeholder="Ingrese el horario del la reservacion"
               className="form-control"
               id="hora"
               required
-              value={reservacion.hora!}
+              value={reservacion.horario!}
               onChange={handleInputChange}
               name="hora"
             />
@@ -109,15 +109,15 @@ export const ReservacionForm = () => {
               onChange={handleInputChange}
               name="fecha"
             />
-						<label htmlFor="disponibilidad">Disponibilidad</label>
+						<label htmlFor="cantidadPersona">Cantidad Persona</label>
             <input						
               type="number"
               className="form-control"
-              id="disponibilidad"
+              id="cantidadPersona"
               required
-              value={reservacion.disponibilidad}
+              value={reservacion.cantidadPersona}
               onChange={handleInputChange}
-              name="disponibilidad"
+              name="cantidadPersona"
             />
 						<br />
 							<div className="btn-group" role="group">								

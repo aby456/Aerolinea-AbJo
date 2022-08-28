@@ -20,10 +20,10 @@ export const ReservacionList = memo(() => {
     
   const listaCabecera = [
     "id",
-    "Hora",
+    "Horario",
     "Lugar",
     "Fecha",
-    "Disponibilidad",
+    "Cantidad Persona",
     "Acciones",
   ];
   const handleChangeBuscar = (event: any) => {
@@ -35,7 +35,7 @@ export const ReservacionList = memo(() => {
     }   
     else{
         reservacionesFiltradas = reservations.filter((reservacion: IReservation) => {
-            return reservacion.hora?.includes(buscar);
+            return reservacion.horario?.includes(buscar);
           });
         setReservationsList(reservacionesFiltradas);
         if(reservacionesFiltradas.length === 0){
@@ -97,10 +97,10 @@ export const ReservacionList = memo(() => {
                 {(reservationsList.length!==0?reservationsList:reservations).map((reservacion: any, index: any) => (
                   <tr key={index}>
                     <td>{reservacion.id}</td>
-                    <td>{reservacion.hora}</td>
+                    <td>{reservacion.horario}</td>
                     <td>{reservacion.lugar}</td>
                     <td>{reservacion.fecha}</td>
-                    <td>{reservacion.disponibilidad}</td>
+                    <td>{reservacion.cantidadPersona}</td>
                     <td>
                       <div className="btn-group" role="group">
                         <Link

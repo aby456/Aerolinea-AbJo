@@ -1,7 +1,7 @@
 export default interface IReservation {
     id?: number | null,
-    hora? : string | null,
+    horario? : string | null,
     lugar? : string | null,
     fecha? : string | null,
-    disponibilidad : number    
+    cantidadPersona : number    
 }

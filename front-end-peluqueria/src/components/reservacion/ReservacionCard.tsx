@@ -33,10 +33,10 @@ export const ReservacionCard = () => {
         reservacion ? (
           <div>          
           <ul>
-            <li> <strong>Hora :</strong>{reservacion.hora}</li>
+            <li> <strong>Hora :</strong>{reservacion.horario}</li>
             <li>Lugar : {reservacion.lugar}</li>
             <li>Fecha : {reservacion.fecha}</li>
-            <li>Disponibilidad : {reservacion.disponibilidad}</li>
+            <li>Disponibilidad : {reservacion.cantidadPersona}</li>
           </ul>
           <br />
 							<div className="btn-group" role="group">								
