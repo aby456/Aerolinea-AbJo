@@ -10,11 +10,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class NewReservacionDTO {
-    @NotNull(message = "Hora width can't be null.")
-    private String hora;
+    @NotNull(message = "Horario width can't be null.")
+    private String horario;
     @NotNull(message = "Lugar width can't be null.")
     private String lugar;
     @NotNull(message = "Fecha width can't be null.")
     private String fecha;
-    private int disponibilidad;
+    private int cantidadPersona;
 }

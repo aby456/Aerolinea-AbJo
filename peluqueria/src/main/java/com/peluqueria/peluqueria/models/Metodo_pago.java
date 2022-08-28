@@ -21,7 +21,7 @@ public class Metodo_pago {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "METODO")
+    @Column(name = "METODOS")
     private String metodo;
 
     @ManyToOne

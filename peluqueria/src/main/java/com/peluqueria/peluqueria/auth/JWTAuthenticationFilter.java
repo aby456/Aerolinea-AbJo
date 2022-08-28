@@ -20,14 +20,18 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.peluqueria.peluqueria.models.User;
+import com.peluqueria.peluqueria.services.JWTService;
+import com.peluqueria.peluqueria.services.impl.JWTServiceImpl;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
+	private JWTService jwtService;
     
- 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+ 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTService jwtService) {
 		this.authenticationManager = authenticationManager;
 		setRequiresAuthenticationRequestMatcher(
 			new AntPathRequestMatcher("/users/login", "POST"));			        
+		this.jwtService = jwtService;
 	}
 
 	@Override
@@ -60,7 +64,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 		String name = ((org.springframework.security.core.userdetails.User) authResult.getPrincipal()).getUsername();
 
+		String token = jwtService.create(authResult);		
+		response.addHeader(JWTServiceImpl.HEADER_STRING, JWTServiceImpl.TOKEN_PREFIX + token);
+
 		Map<String, Object> body = new HashMap<String, Object>();
+		body.put("token", token);
 		body.put("username", name);
 		body.put("message", String.format("Hello %s, login success", name ) );
 		

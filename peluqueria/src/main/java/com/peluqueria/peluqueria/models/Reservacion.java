@@ -24,14 +24,14 @@ public class Reservacion {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Column(name = "HORAS")
-    private String hora;
+    @Column(name = "HORARIOS")
+    private String horario;
     @Column(name = "LUGARES")
     private String lugar;
     @Column(name = "FECHAS")
     private String fecha;
-    @Column(name = "DISPONIBILIDADES")
-    private int disponibilidad;
+    @Column(name = "CANTIDAD_PERSONAS")
+    private int cantidadPersona;
 
 
 
@@ -63,6 +63,9 @@ public class Reservacion {
 
     @OneToMany(mappedBy = "reservacion", cascade=CascadeType.REMOVE)
     private List<Cliente> cliente;
+
+    @OneToMany(mappedBy = "reservacion", cascade=CascadeType.REMOVE)
+    private List<Metodo_pago> metodo_pago;
 
 
 }

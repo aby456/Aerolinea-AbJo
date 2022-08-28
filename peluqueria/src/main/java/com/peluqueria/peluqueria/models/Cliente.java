@@ -26,15 +26,15 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @Column(name = "NOMBRE")   
+    @Column(name = "NOMBRES")   
     private String nombre;
-    @Column(name = "TELEFONO")
+    @Column(name = "TELEFONOS")
     private String telefono;
-    @Column(name = "DIRECCION")   
+    @Column(name = "DIRECCIONES")   
     private String direccion;
-    @Column(name = "EMAIL")   
+    @Column(name = "EMAILS")   
     private String email;
-    @Column(name = "PASSWORD")
+    @Column(name = "PASSWORDS")
     private String password;
 
 

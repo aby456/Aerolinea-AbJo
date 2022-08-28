@@ -9,8 +9,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class ReservacionListDTO {
     private Long id;
-    private String hora;
+    private String horario;
     private String lugar;
     private String fecha;
-    private int disponibilidad;
+    private int cantidadPersona;
 }

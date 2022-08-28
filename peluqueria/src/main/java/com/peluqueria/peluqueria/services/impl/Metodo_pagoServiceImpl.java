@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.peluqueria.peluqueria.dto.Metodo_PagoReservacionDTO;
-import com.peluqueria.peluqueria.dto.Metodo_pagoDTO;
+import com.peluqueria.peluqueria.dto.Metodo_PagoDTO;
 import com.peluqueria.peluqueria.dto.NewMetodo_pagoDTO;
 import com.peluqueria.peluqueria.exception.NoContentException;
 import com.peluqueria.peluqueria.exception.ResourceNotFoundException;
@@ -34,13 +34,13 @@ public class Metodo_pagoServiceImpl implements Metodo_pagoService {
 
     @Override
     @Transactional
-    public Metodo_pagoDTO create(Long idReservacion, NewMetodo_pagoDTO metodo_pagoDTO) {
+    public Metodo_PagoDTO create(Long idReservacion, NewMetodo_pagoDTO metodo_pagoDTO) {
         Reservacion reservacion = reservacionRepository.findById(idReservacion)
             .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
         Metodo_pago metodo = modelMapper.map(metodo_pagoDTO, Metodo_pago.class);    
         metodo.setReservacion(reservacion);
         repository.save(metodo);
-        return modelMapper.map(metodo, Metodo_pagoDTO.class); 
+        return modelMapper.map(metodo, Metodo_PagoDTO.class); 
     }
 
     @Override
@@ -55,7 +55,7 @@ public class Metodo_pagoServiceImpl implements Metodo_pagoService {
 
     @Override
     @Transactional
-    public Metodo_PagoReservacionDTO update(Metodo_pagoDTO metodoDTO, Long idReservacion, Long id) {
+    public Metodo_PagoReservacionDTO update(Metodo_PagoDTO metodoDTO, Long idReservacion, Long id) {
         Reservacion reservacion = reservacionRepository.findById(idReservacion)
         .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
         Metodo_pago metodo = repository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Servicio not found"));
@@ -78,13 +78,13 @@ public class Metodo_pagoServiceImpl implements Metodo_pagoService {
 
     @Override
     @Transactional(readOnly=true)
-    public List<Metodo_pagoDTO> list(Long idReservacion) {
+    public List<Metodo_PagoDTO> list(Long idReservacion) {
         Reservacion reservacion = reservacionRepository.findById(idReservacion)
             .orElseThrow(()-> new ResourceNotFoundException("Reservacion not found"));
         List<Metodo_pago> metodos = repository.findByReservacion(reservacion);
         if(metodos.isEmpty()) throw new NoContentException("Servicios is empty");
         //Lambda ->
-        return metodos.stream().map(q -> modelMapper.map(q, Metodo_pagoDTO.class) )
+        return metodos.stream().map(q -> modelMapper.map(q, Metodo_PagoDTO.class) )
             .collect(Collectors.toList());
     }
     

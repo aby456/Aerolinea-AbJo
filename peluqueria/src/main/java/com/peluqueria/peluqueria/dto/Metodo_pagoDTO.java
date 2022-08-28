@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Metodo_pagoDTO extends NewMetodo_pagoDTO {
+public class Metodo_PagoDTO extends NewMetodo_pagoDTO {
     private Long id;
 
 }

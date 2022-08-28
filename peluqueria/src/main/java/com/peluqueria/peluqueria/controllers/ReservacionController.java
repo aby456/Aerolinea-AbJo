@@ -3,6 +3,7 @@ package com.peluqueria.peluqueria.controllers;
 
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,7 @@ public class ReservacionController {
     }
     
     /* ================ CREATE ================ */
+    @Secured({"ROLE_ADMINISTRADOR", "ROLE_USUARIO"})
     @PostMapping()
     public ResponseEntity<ReservacionDTO> create(@Valid @RequestBody NewReservacionDTO reservacionDTO){
         ReservacionDTO result = service.create(reservacionDTO);
@@ -44,6 +46,7 @@ public class ReservacionController {
     }
 
     /* ================ RETRIEVE ================ */
+    @Secured({"ROLE_ADMINISTRADOR", "ROLE_USUARIO"})
     @GetMapping("/{id}")
     public ResponseEntity<ReservacionDTO> retrive(@PathVariable("id") Long id){
         ReservacionDTO result = service.retrieve(id);
@@ -51,6 +54,7 @@ public class ReservacionController {
     }
 
     /* ================ UPDATE ================ */
+    @Secured({"ROLE_ADMINISTRADOR"})
     @PutMapping("/{id}")
     public ResponseEntity<ReservacionDTO> update(@RequestBody ReservacionDTO reservacionDTO, @PathVariable("id") Long id){
         ReservacionDTO result = service.update(reservacionDTO, id);
@@ -58,6 +62,7 @@ public class ReservacionController {
     }
 
     /* ================ DELETE ================ */
+    @Secured({"ROLE_ADMINISTRADOR"})
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable("id") Long id){
         service.delete(id);
@@ -65,6 +70,7 @@ public class ReservacionController {
     }
 
     /* ================ LIST ================ */
+    @Secured({"ROLE_ADMINISTRADOR", "ROLE_USUARIO"})
     @GetMapping("/{page}/{size}")
     public ResponseEntity<List<ReservacionListDTO>> list(@PathVariable("page") int page, 
         @PathVariable("size") int size,
@@ -74,10 +80,11 @@ public class ReservacionController {
     }
 
      /* ================ COUNT ================ */
-     @GetMapping("/count")
-     public ResponseEntity<Long> count(){
-         long result = service.count();
-         return ResponseEntity.ok().body(result);        
-     }
+    @Secured({"ROLE_ADMINISTRADOR", "ROLE_USUARIO"})
+    @GetMapping("/count")
+    public ResponseEntity<Long> count(){
+        long result = service.count();
+        return ResponseEntity.ok().body(result);        
+    }
 
 }

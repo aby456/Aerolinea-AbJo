@@ -5,7 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import com.peluqueria.peluqueria.dto.Metodo_PagoReservacionDTO;
-import com.peluqueria.peluqueria.dto.Metodo_pagoDTO;
+import com.peluqueria.peluqueria.dto.Metodo_PagoDTO;
 import com.peluqueria.peluqueria.dto.NewMetodo_pagoDTO;
 import com.peluqueria.peluqueria.services.Metodo_pagoService;
 
@@ -34,22 +34,22 @@ public class Metodo_pagoController {
 
     /* ================ CREATE ================ */
     @PostMapping("/{id}/metodo")
-    public ResponseEntity<Metodo_pagoDTO> create(@PathVariable("id") Long id, @Valid @RequestBody NewMetodo_pagoDTO clienteDTO){
-        Metodo_pagoDTO servicioDTOs = srvo.create(id, clienteDTO);
+    public ResponseEntity<Metodo_PagoDTO> create(@PathVariable("id") Long id, @Valid @RequestBody NewMetodo_pagoDTO clienteDTO){
+        Metodo_PagoDTO servicioDTOs = srvo.create(id, clienteDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(servicioDTOs);        
     }
 
-       /* ================ RETRIEVE ================ */
-       @GetMapping("/{idReservacion}/metodo/{id}")
-       public ResponseEntity<Metodo_PagoReservacionDTO> retrive(@PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
+    /* ================ RETRIEVE ================ */
+    @GetMapping("/{idReservacion}/metodo/{id}")
+    public ResponseEntity<Metodo_PagoReservacionDTO> retrive(@PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
         Metodo_PagoReservacionDTO result = srvo.retrieve(idReservacion, id);
-           return ResponseEntity.ok().body(result);        
-       }
+        return ResponseEntity.ok().body(result);        
+    }
    
 
   /* ================ UPDATE ================ */
     @PutMapping("/{idReservacion}/metodo/{id}")
-    public ResponseEntity<Metodo_PagoReservacionDTO> update(@RequestBody Metodo_pagoDTO servicioDTO, @PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
+    public ResponseEntity<Metodo_PagoReservacionDTO> update(@RequestBody Metodo_PagoDTO servicioDTO, @PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
         Metodo_PagoReservacionDTO result = srvo.update(servicioDTO, idReservacion, id);
         return ResponseEntity.ok().body(result);
     }
@@ -65,8 +65,8 @@ public class Metodo_pagoController {
 
        /* ================ LIST ================ */
     @GetMapping("/{id}/metodo")
-    public ResponseEntity<List<Metodo_pagoDTO>> list(@PathVariable("id") Long id){
-        List<Metodo_pagoDTO> servicios = srvo.list(id);
+    public ResponseEntity<List<Metodo_PagoDTO>> list(@PathVariable("id") Long id){
+        List<Metodo_PagoDTO> servicios = srvo.list(id);
         return ResponseEntity.ok().body(servicios);        
     }
 }
