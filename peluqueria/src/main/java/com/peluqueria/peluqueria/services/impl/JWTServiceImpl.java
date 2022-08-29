@@ -33,9 +33,10 @@ public class JWTServiceImpl implements JWTService {
 	public static final String HEADER_STRING = "Authorization";
 	
 	@Override
-	public String create(Authentication auth) throws IOException {
+	public String create(Authentication auth) {
 
-		String username = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
+		try {
+			String username = ((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername();
 
 		Collection<? extends GrantedAuthority> roles = auth.getAuthorities();
 
@@ -51,6 +52,9 @@ public class JWTServiceImpl implements JWTService {
 						.compact();
 
 		return token;
+		} catch (IOException e) {
+			return null;
+		}
 	}
 
 	@Override
