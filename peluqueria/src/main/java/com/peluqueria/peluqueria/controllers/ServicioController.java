@@ -11,6 +11,7 @@ import com.peluqueria.peluqueria.services.ServicioService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,7 @@ public class ServicioController {
     }
 
     /* ================ CREATE ================ */
+    @Secured({"ROLE_ADMINISTRADOR", "ROLE_USUARIO"})
     @PostMapping("/{id}/servicio")
     public ResponseEntity<ServicioDTO> create(@PathVariable("id") Long id, @Valid @RequestBody NewServicioDTO servicioDTO){
         ServicioDTO servicioDTOs = srvo.create(id, servicioDTO);
@@ -41,6 +43,7 @@ public class ServicioController {
     }
 
     /* ================ RETRIEVE ================ */
+    @Secured({"ROLE_ADMINISTRADOR"})
     @GetMapping("/{idReservacion}/servicio/{id}")
     public ResponseEntity<ServicioReservacionDTO> retrive(@PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
         ServicioReservacionDTO result = srvo.retrieve(idReservacion, id);
@@ -48,6 +51,7 @@ public class ServicioController {
     }
 
     /* ================ UPDATE ================ */
+    @Secured({"ROLE_ADMINISTRADOR", "ROLE_USUARIO"})
     @PutMapping("/{idReservacion}/servicio/{id}")
     public ResponseEntity<ServicioReservacionDTO> update(@RequestBody ServicioDTO servicioDTO, @PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
         ServicioReservacionDTO result = srvo.update(servicioDTO, idReservacion, id);
@@ -55,6 +59,7 @@ public class ServicioController {
     }
 
     /* ================ DELETE ================ */
+    @Secured({"ROLE_ADMINISTRADOR", "ROLE_USUARIO"})
     @DeleteMapping("/{idReservacion}/servicio/{id}")
     public ResponseEntity<Void> delete(@PathVariable("idReservacion") Long idReservacion, @PathVariable("id") Long id){
         srvo.delete(idReservacion, id);
@@ -62,6 +67,7 @@ public class ServicioController {
     }
 
     /* ================ LIST ================ */
+    @Secured({"ROLE_ADMINISTRADOR", "ROLE_USUARIO"})
     @GetMapping("/{id}/servicio")
     public ResponseEntity<List<ServicioDTO>> list(@PathVariable("id") Long id){
         List<ServicioDTO> servicios = srvo.list(id);
