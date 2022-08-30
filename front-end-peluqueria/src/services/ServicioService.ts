@@ -1,15 +1,15 @@
 import Swal from "sweetalert2";
 import http from "../http-common";
-import IReservacionData from "../models/Reservacion";
+import IServices from "../models/Servicio";
 
-const create = async (data: IReservacionData) => {    
+const create = async (data: IServices) => {    
   try {
-    const response = await http.post<IReservacionData>("/reservacion", data);
+    const response = await http.post<IServices>("/servicio", data);
     if(response.status === 201){
       Swal.fire({
         icon: 'success',
         title: 'Correcto',
-        text: 'La reservacion ha sido creado correctamente',
+        text: 'El Servicio ha sido creado correctamente',
         confirmButtonText: 'Aceptar'    
 
       });
@@ -27,17 +27,17 @@ const create = async (data: IReservacionData) => {
 };
 
 const retrieve = async (id: number) => {
-    return http.get<IReservacionData>(`/reservacion/${id}`);
+    return http.get<IServices>(`/servicio/${id}`);
 };
 
-const update = async (data: IReservacionData) => {
+const update = async (data: IServices) => {
   try {    
-    const response = await http.put<IReservacionData>(`/reservacion/${data.id}`, data);
+    const response = await http.put<IServices>(`/servicio/${data.id}`, data);
     if(response.status === 200){
       Swal.fire({
         icon: 'success',
         title: 'Correcto',
-        text: 'La reservacion ha sido actualizado',
+        text: 'El Servicio ha sido actualizado',
         confirmButtonText: 'Aceptar'    
       });
     }
@@ -53,14 +53,14 @@ const update = async (data: IReservacionData) => {
     
 };
 
-const remove = async (id: number) => {
+const remove = async (id: number|null) => {
     try {
-      const response = await  http.delete<string>(`/reservacion/${id}`);
+      const response = await  http.delete<string>(`/servicio/${id}`);
       if(response.status === 200){
         Swal.fire({
           icon: 'success',
           title: 'Correcto',
-          text: 'La reservacion ha sido eliminado',
+          text: 'El Servicio ha sido eliminado',
           confirmButtonText: 'Aceptar'    
         });
       }
@@ -76,24 +76,17 @@ const remove = async (id: number) => {
 };
 
 
-const list = (page: number, size: number, sort? : String)=> {
-  const urlRequest : string = "/reservacion/" + page + "/" + size ;
-
-  return http.get<Array<IReservacionData>>(urlRequest);
+const list = ()=> {
+  const urlRequest : string = "/servicio";
+  return http.get<Array<IServices>>(urlRequest);
 };
 
-const count = async ():Promise<number> =>  {  
-  const response = await http.get<number>("/reservacion/count");
-  return response.data;
-};
-
-const ReservacionService = {
+const ServicioService = {
   create,
   retrieve,
   update,
   remove,
-  list,
-  count
+  list
 
 };
-export default ReservacionService;
+export default ServicioService;

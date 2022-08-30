@@ -1,18 +1,18 @@
 import Swal from "sweetalert2";
 import http from "../http-common";
-import IReservation from "../models/Reservacion";
 import IReservacionData from "../models/Reservacion";
 
 const create = async (data: IReservacionData) => {    
   try {
+    console.log(data);
     const response = await http.post<IReservacionData>("/reservacion", data);
+    
     if(response.status === 201){
       Swal.fire({
         icon: 'success',
         title: 'Correcto',
         text: 'La reservacion ha sido creado correctamente',
-        confirmButtonText: 'Aceptar'    
-
+        confirmButtonText: 'Aceptar'
       });
     }
     console.log(response);
@@ -22,7 +22,7 @@ const create = async (data: IReservacionData) => {
       icon: 'error',
       title: '¡Error!',
       text: 'Network Error',
-      confirmButtonText: 'Aceptar'    
+      confirmButtonText: 'Aceptar' 
     });
   }
 };
@@ -95,6 +95,5 @@ const ReservacionService = {
   remove,
   list,
   count
-
 };
 export default ReservacionService;

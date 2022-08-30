@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaArrowLeft, FaTrash } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight, FaTrash } from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import IReservacionModel from "../../models/Reservacion";
@@ -9,7 +9,6 @@ export const ReservacionCard = () => {
   const { id }= useParams();
 
   const [reservacion, setReservacion] = useState<IReservacionModel>();
-
   useEffect(() => {
     if (id)
       getReservacion(id);
@@ -46,6 +45,9 @@ export const ReservacionCard = () => {
 								<button type="button" className="btn btn-danger">
                   <FaTrash />Eliminar
                 </button>
+                <Link to={"/servico/" + reservacion.id} className="btn btn-primary">
+                    Agregar Servicio <FaArrowRight />
+                </Link>
 							</div>
           </div>
 

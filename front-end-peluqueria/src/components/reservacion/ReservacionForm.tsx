@@ -5,16 +5,15 @@ import IReservacionModel from "../../models/Reservacion";
 import ReservacionService from "../../services/ReservacionServices";
 
 export const ReservacionForm = () => {
-	
   const { id }= useParams();
   let navigate = useNavigate();
 
     //Model vacío
     const initialReservacionModel : IReservacionModel = {
         id: null,
-        horario: "",
-        lugar: "",
-        fecha: "",
+        horario: "12344",
+        lugar: "fdg",
+        fecha: "fdg",
         cantidadPersona: 2
     };
 
@@ -26,7 +25,6 @@ export const ReservacionForm = () => {
         const { name, value } = event.target;
         setReservacion({ ...reservacion, [name]: value });
     };
-
 
     const saveReservacion = () => {        
       if(reservacion.id !== null)
@@ -42,7 +40,7 @@ export const ReservacionForm = () => {
       }
       else
       {
-            ReservacionService.create(reservacion)
+          ReservacionService.create(reservacion)
           .then((response: any) => {    
             navigate("/reservacion");
             console.log(response.data);
@@ -69,7 +67,6 @@ export const ReservacionForm = () => {
           console.log(e);
         });
    };
-
 
 		return ( //JSX
 			<div className="submit-form">				

@@ -11,8 +11,6 @@ const App: React.FC = () => {
       <div className="container mt-3">
         <AppRouter/>
       </div>
-
-      
     </div>
   );
 }

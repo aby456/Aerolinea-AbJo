@@ -16,7 +16,6 @@ export const useReservation = ((page:number, limit:number, reservacionesBuscadas
                 setLoading(false);
                 servicios.count().then(response => {
                     setTotal(Math.ceil(response / limit)-1);
-                    console.log(total);
                 });
             }).catch(error => {
                 setLoading(false);

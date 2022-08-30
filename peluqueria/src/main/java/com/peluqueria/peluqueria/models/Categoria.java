@@ -23,5 +23,4 @@ public class Categoria {
     @ManyToOne
     @JoinColumn(name="SERVICIO_ID", nullable=false)
     private Servicio servicio;
-
 }
