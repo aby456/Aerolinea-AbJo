@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.peluqueria.peluqueria.models.User;
 import com.peluqueria.peluqueria.services.UserService;
 
+
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/users")

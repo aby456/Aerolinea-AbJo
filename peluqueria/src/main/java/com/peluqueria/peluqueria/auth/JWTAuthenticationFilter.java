@@ -41,6 +41,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             User user = null;		
 			try {				
                 user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+				System.out.println("USUARIO ES: " + user);
 				logger.info("Username from request InputStream: " + user.getName());
 				logger.info("Password from request InputStream: " + user.getPassword());
 				
@@ -71,7 +72,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		body.put("token", token);
 		body.put("username", name);
 		body.put("message", String.format("Hello %s, login success", name ) );
-		System.out.print(token);
+		
 		response.getWriter().write(new ObjectMapper().writeValueAsString(body));
 		response.setStatus(200);
 		response.setContentType("application/json");
