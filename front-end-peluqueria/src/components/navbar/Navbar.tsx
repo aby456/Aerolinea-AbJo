@@ -1,11 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../../../src/logo.svg'
+import getInfoUser from '../../helpers/GetUser';
+import IUser from '../../models/User';
+import './navbar.css'
 
 const Navbar = () => {
-
+  const user:IUser = getInfoUser();
   return (
-    <nav className="navbar navbar-expand navbar-dark bg-dark"> 
+    <nav className="navbar navbar-expand navbar-dark bg-dark gap-5"> 
             
         <Link to={"/"} className="navbar-brand">
           <img src= {logo} className="d-block mx-auto mb-4" height="50" alt="logo"/> 
@@ -19,6 +22,8 @@ const Navbar = () => {
             </ol>
           </nav>          
         </div>
+        <h3 className='titulo'>{user.user}</h3>
+
       </nav>
   )
 }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { FaArrowLeft, FaArrowRight, FaTrash } from "react-icons/fa";
+import { FaArrowLeft} from "react-icons/fa";
 import { Link } from 'react-router-dom';
 import { useParams } from "react-router-dom";
 import IServicio from "../../models/Servicio";

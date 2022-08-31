@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import ServicioList from '../../components/servicio/ServicioList'
 
 const ServicioPage = () => {

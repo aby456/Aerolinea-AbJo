@@ -2,13 +2,11 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ILogin from '../../models/Login'
 import Login from '../../services/LoginService'
-import IUser from '../../models/User';
 import  './login.css'
 
 const LoginForm = () => {
     const [loginForm, setLoginForm] = useState<ILogin>({name: '', password: ''})
     let navigate = useNavigate();
-
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target
         setLoginForm({ ...loginForm, [name]: value })
