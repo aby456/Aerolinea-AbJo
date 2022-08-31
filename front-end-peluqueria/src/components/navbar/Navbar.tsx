@@ -6,7 +6,11 @@ import IUser from '../../models/User';
 import './navbar.css'
 
 const Navbar = () => {
-  const user:IUser = getInfoUser();
+  let user: any 
+  if(getInfoUser() !== null){
+    user = getInfoUser();
+  }
+
   return (
     <nav className="navbar navbar-expand navbar-dark bg-dark gap-5"> 
             
@@ -22,7 +26,13 @@ const Navbar = () => {
             </ol>
           </nav>          
         </div>
-        <h3 className='titulo'>{user.user}</h3>
+        {
+          user!==null && user !== undefined ?  (
+            <h3 className='titulo'>{user.user}</h3>
+          ) : (
+            <></>
+          )
+        }
 
       </nav>
   )
