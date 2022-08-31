@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ReservacionRepository extends JpaRepository<Reservacion,Long> {
-    public List<Reservacion> findByHorario(String dia);
+    public List<Reservacion> findByHorario(String criteria);
 }
