@@ -11,9 +11,9 @@ export const ReservacionForm = () => {
     //Model vacío
     const initialReservacionModel : IReservacionModel = {
         id: null,
-        horario: "12344",
-        lugar: "fdg",
-        fecha: "fdg",
+        horario: "",
+        lugar: "",
+        fecha: "",
         cantidadPersona: 2
     };
 
@@ -76,13 +76,13 @@ export const ReservacionForm = () => {
 						<label htmlFor="horario">Horario</label>
             <input
               type="text"
-							placeholder="Ingrese el horario del la reservacion"
               className="form-control"
-              id="hora"
+							placeholder="Ingrese el horario del la reservacion"
+              id="horario"
               required
               value={reservacion.horario!}
               onChange={handleInputChange}
-              name="hora"
+              name="horario"
             />
 						<label htmlFor="lugar">Lugar</label>
             <input						
