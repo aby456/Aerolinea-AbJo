@@ -58,7 +58,7 @@ const ServicioList = () => {
         if (result.isConfirmed) {
             ServiciosService.remove(idReservacion,id)
             .then((response: any) => {
-                navigate("/reservacion/retrieve/"+id+"/servicio");
+                navigate("/reservacion/retrieve/"+idReservacion+"/servicio");
             })
             .catch((e: Error) => {
               console.log(e);

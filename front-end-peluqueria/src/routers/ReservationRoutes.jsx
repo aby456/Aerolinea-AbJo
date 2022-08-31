@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route,useNavigate } from "react-router-dom";
 import { ReservacionForm } from "../components/reservacion/ReservacionForm";
 import { ReservacionCard } from "../components/reservacion/ReservacionCard";
 import ReservationPage from "../pages/reservation/ReservationPage";
@@ -8,6 +8,12 @@ import ServicioRoutes from "./ServicioRoutes";
 import ReservationRetrieveRoute from "./ReservationRetrieveRoute";
 
 const ReservationRoutes = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    if(!localStorage.getItem("token")){
+      navigate("/login");
+    }
+  }, [])
   return (
     <div className="container mt-3">
       <PaginationContextProvider>

@@ -5,10 +5,10 @@ import PaginationContext from "../contexts/PaginationContext";
 
 
 export const useReservation = ((page:number, limit:number, reservacionesBuscadas?:IReservation) => {
-
     const [reservations, setReservations] = useState<Array<IReservation>>([]);
     const [loading, setLoading] = useState(false);
     const {setTotal, total}:any =  useContext(PaginationContext);
+
     useEffect(() => {
         setLoading(true);
             servicios.list(page, limit).then(response => {

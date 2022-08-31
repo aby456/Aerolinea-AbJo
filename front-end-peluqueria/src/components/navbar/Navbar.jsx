@@ -16,8 +16,6 @@ const Navbar = () => {
               <li className="breadcrumb-item active" aria-current="page" ><Link to="/reservacion">
                 Reservacion
               </Link></li>
-              <li className="breadcrumb-item"><Link to="/cliente">Cliente</Link></li>
-              <li className="breadcrumb-item"><Link to="/servicio">Servicio</Link></li>
             </ol>
           </nav>          
         </div>

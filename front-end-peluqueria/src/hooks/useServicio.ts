@@ -16,7 +16,7 @@ export const useService = ((id:number,reservacionesBuscadas?:IService) => {
                 console.log(error);
             }
             );
-    }, []);
+    }, [id]);
 
     return {services, loading};
 });
