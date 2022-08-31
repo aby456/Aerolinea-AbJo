@@ -1,8 +1,8 @@
 import IReservation from "./Reservacion";
 export default interface IServicio {
     id: number | null,
-    nombreService: string,
-    precioService: number,
-    tiempoEstimadoService: number,
+    nombreServicio: string,
+    precioServicio: number,
+    tiempoEstimadoServicio: number,
     reservacion: IReservation | null,
 }

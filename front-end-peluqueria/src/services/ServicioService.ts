@@ -2,9 +2,9 @@ import Swal from "sweetalert2";
 import http from "../http-common";
 import IServices from "../models/Servicio";
 
-const create = async (data: IServices) => {    
+const create = async (data: IServices, id:any) => {    
   try {
-    const response = await http.post<IServices>("/servicio", data);
+    const response = await http.post<IServices>(`reservacion/${id}/servicio/`, data);
     if(response.status === 201){
       Swal.fire({
         icon: 'success',
@@ -26,13 +26,13 @@ const create = async (data: IServices) => {
   }
 };
 
-const retrieve = async (id: number) => {
-    return http.get<IServices>(`/servicio/${id}`);
+const retrieve = async (id: number, idServicio:number) => {
+    return http.get<IServices>(`reservacion/${id}/servicio/${idServicio}`);
 };
 
-const update = async (data: IServices) => {
+const update = async (data: IServices, id:any) => {
   try {    
-    const response = await http.put<IServices>(`/servicio/${data.id}`, data);
+    const response = await http.put<IServices>(`reservacion/${id}/servicio/${data.id}`, data);
     if(response.status === 200){
       Swal.fire({
         icon: 'success',
@@ -53,9 +53,9 @@ const update = async (data: IServices) => {
     
 };
 
-const remove = async (id: number|null) => {
+const remove = async (idReservacion: number|null,id:number|null) => {
     try {
-      const response = await  http.delete<string>(`/servicio/${id}`);
+      const response = await  http.delete<string>(`reservacion/${idReservacion}/servicio/${id}`);
       if(response.status === 200){
         Swal.fire({
           icon: 'success',
@@ -76,8 +76,8 @@ const remove = async (id: number|null) => {
 };
 
 
-const list = ()=> {
-  const urlRequest : string = "/servicio";
+const list = (id:number)=> {
+  const urlRequest : string = "reservacion/"+id+"/servicio";
   return http.get<Array<IServices>>(urlRequest);
 };
 

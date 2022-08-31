@@ -3,12 +3,12 @@ import servicios from "../services/ServicioService";
 import IService from "../models/Servicio";
 
 
-export const useService = ((reservacionesBuscadas?:IService) => {
+export const useService = ((id:number,reservacionesBuscadas?:IService) => {
     const [services, setServices] = useState<Array<IService>>([]);
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         setLoading(true);
-            servicios.list().then(response => {
+            servicios.list(id).then(response => {
                 setServices(response.data);
                 setLoading(false);
             }).catch(error => {

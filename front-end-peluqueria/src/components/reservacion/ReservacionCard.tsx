@@ -42,10 +42,7 @@ export const ReservacionCard = () => {
                 <Link to={"/reservacion"} className="btn btn-primary">
                     <FaArrowLeft /> Volver
                 </Link>
-								<button type="button" className="btn btn-danger">
-                  <FaTrash />Eliminar
-                </button>
-                <Link to={"/servico/" + reservacion.id} className="btn btn-primary">
+                <Link to={"/reservacion/retrieve/"+reservacion.id+"/servicio"} className="btn btn-primary">
                     Agregar Servicio <FaArrowRight />
                 </Link>
 							</div>

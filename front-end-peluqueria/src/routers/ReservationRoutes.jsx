@@ -4,6 +4,8 @@ import { ReservacionForm } from "../components/reservacion/ReservacionForm";
 import { ReservacionCard } from "../components/reservacion/ReservacionCard";
 import ReservationPage from "../pages/reservation/ReservationPage";
 import { PaginationContextProvider } from "../contexts/PaginationContext";
+import ServicioRoutes from "./ServicioRoutes";
+import ReservationRetrieveRoute from "./ReservationRetrieveRoute";
 
 const ReservationRoutes = () => {
   return (
@@ -12,8 +14,9 @@ const ReservationRoutes = () => {
         <Routes>
           <Route path="/" element={<ReservationPage />} />
           <Route path="/create" element={<ReservacionForm />} />
-          <Route path="/retrieve/:id" element={<ReservacionCard />} />
+          <Route path="/retrieve/:id/*" element={<ReservationRetrieveRoute />} />
           <Route path="/update/:id" element={<ReservacionForm />} />
+          <Route path="/servicio/*" element={<ServicioRoutes />} />
         </Routes>
       </PaginationContextProvider>
     </div>

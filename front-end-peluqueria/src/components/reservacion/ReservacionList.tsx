@@ -56,12 +56,11 @@ export const ReservacionList = memo(() => {
         if (result.isConfirmed) {
             ReservacionService.remove(id)
             .then((response: any) => {
-                navigate("/");
+                navigate("/reservacion");
             })
             .catch((e: Error) => {
               console.log(e);
-            });      
-
+            });
         }
       });        
  };
